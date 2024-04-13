@@ -7,10 +7,10 @@ export class Paper extends Phaser.Scene {
 
   create() {
     // position paper scene and set size
-    this.cameras.main.setViewport(640, 162, 640, 756);
+    this.cameras.main.setViewport(675, 180, 520, 740);
     // set bounds for physics to match camera
-    this.physics.world.setBounds(0, 0, 640, 756);
-    this.add.rectangle(0, 0, 640, 756, 0x000000, 0.5).setOrigin(0);
+    this.physics.world.setBounds(0, 0, 520, 740);
+    this.add.rectangle(0, 0, 640, 756, 0x000000, 0.2).setOrigin(0);
 
     const text = this.add
       .text(320, 378, "Paper", { fontSize: "48px", color: "#bada55" })
