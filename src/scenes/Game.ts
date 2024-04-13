@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { PaperObject } from "../objects/PaperObject";
+import Button from "../objects/Button";
 
 const AVAILABLE_GAMES = ["Invaders", "Flap"];
 
@@ -22,15 +23,18 @@ export class Game extends Scene {
   start() {
     this.add.image(0, 0, "desk").setOrigin(0);
     this.add.image(640, 162, "paper").setOrigin(0);
+    new Button({
+      scene: this,
+      x: 100,
+      y: 20,
+      text: "Game Over",
+      onPointerDown: () => this.scene.start("GameOver"),
+    });
     this.scene.launch(
       // AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
-      AVAILABLE_GAMES[1]
+      AVAILABLE_GAMES[0]
     );
     this.sound.play("delicate", { loop: true, volume: 0.2 });
-
-    this.input.once("pointerdown", () => {
-      this.scene.start("GameOver");
-    });
 
     this.events.on("shutdown", this.shutdown, this);
   }
