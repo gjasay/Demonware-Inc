@@ -1,25 +1,21 @@
 import { Scene } from "phaser";
-import { Paper_Object } from "../objects/Paper_Object";
+import { PaperObject } from "../objects/PaperObject";
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
-  paperObj: Paper_Object;
+  paperObj: PaperObject;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
   }
 
   create() {
-    this.paperObj = new Paper_Object(this, 100, 100);
+    this.paperObj = new PaperObject(this, 100, 100);
     this.physics.add.existing(this.paperObj);
     this.camera = this.cameras.main;
 
     this.start();
     this.events.on("shutdown", this.shutdown, this);
-  }
-
-  update() {
-    this.paperObj.update(); // Added paper object to update loop
   }
 
   start() {
@@ -32,6 +28,12 @@ export class Game extends Scene {
       this.scene.stop("Paper");
       this.scene.start("GameOver");
     });
+
+    this.events.on("shutdown", this.shutdown, this);
+  }
+
+  update() {
+    this.paperObj.update(); // Added paper object to update loop
   }
 
   shutdown() {
