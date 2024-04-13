@@ -43,6 +43,7 @@ export default class Invaders extends PaperBaseScene {
 
     this.player = this.physics.add
       .sprite(260, 690, "scrungleton")
+      .setRotation(-Math.PI / 2)
       .setScale(0.5)
       .setOrigin(0.5)
       .setCollideWorldBounds(true);
@@ -53,7 +54,7 @@ export default class Invaders extends PaperBaseScene {
         if (this.bulletGroup.countActive() < 10) {
           this.bulletGroup.createFromConfig({
             key: "projectile",
-            setXY: { x: this.player.x, y: this.player.y },
+            setXY: { x: this.player.x - 10, y: this.player.y - 32 },
             setScale: { x: 0.2, y: 0.2 },
           });
         }
@@ -93,7 +94,5 @@ export default class Invaders extends PaperBaseScene {
     });
   }
 
-  shutdown() {
-    console.log("teardown");
-  }
+  shutdown() {}
 }

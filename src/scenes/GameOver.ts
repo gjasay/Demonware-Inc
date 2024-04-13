@@ -17,12 +17,24 @@ export class GameOver extends Scene {
     new Button({
       scene: this,
       x: 960,
-      y: 780,
+      y: 700,
       fontSize: 60,
       text: "Hell Yeah! Play Again!",
       onPointerDown: () => {
         this.sound.stopAll();
-        this.scene.start("Game");
+        this.scene.start("MainMenu");
+      },
+    });
+
+    new Button({
+      scene: this,
+      x: 960,
+      y: 780,
+      fontSize: 60,
+      text: "No! Who Made This Shit!?",
+      onPointerDown: () => {
+        this.sound.stopAll();
+        this.scene.start("Credits");
       },
     });
   }

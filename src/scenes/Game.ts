@@ -53,10 +53,11 @@ export class Game extends Scene {
 
   onGameOver = () => {
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
+    this.lives--;
     if (this.lives > 0) {
-      this.lives--;
       this.onWin();
     } else {
+      this.lives = 3;
       this.scene.start("GameOver");
     }
   };

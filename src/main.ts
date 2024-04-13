@@ -1,5 +1,6 @@
 import { Boot } from "./scenes/Boot";
 import Breakout from "./scenes/Breakout";
+import { Credits } from "./scenes/Credits";
 import Flap from "./scenes/Flap";
 import { Game as MainGame } from "./scenes/Game";
 import { GameOver } from "./scenes/GameOver";
@@ -21,7 +22,17 @@ const config: Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [Boot, Preloader, MainMenu, MainGame, Invaders, Flap, Breakout, GameOver],
+  scene: [
+    Boot,
+    Preloader,
+    MainMenu,
+    MainGame,
+    Invaders,
+    Flap,
+    Breakout,
+    GameOver,
+    Credits,
+  ],
 };
 
 export default new Game(config);
