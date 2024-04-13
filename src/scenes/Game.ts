@@ -31,8 +31,7 @@ export class Game extends Scene {
       onPointerDown: () => this.scene.start("GameOver"),
     });
     this.scene.launch(
-      // AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
-      AVAILABLE_GAMES[0]
+      AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
     );
     this.sound.play("delicate", { loop: true, volume: 0.2 });
 
