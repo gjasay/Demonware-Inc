@@ -1,8 +1,8 @@
 import { Boot } from "./scenes/Boot";
 import { Game as MainGame } from "./scenes/Game";
 import { GameOver } from "./scenes/GameOver";
+import Invaders from "./scenes/Invaders";
 import { MainMenu } from "./scenes/MainMenu";
-import { Paper } from "./scenes/Paper";
 import { Preloader } from "./scenes/Preloader";
 
 import { Game, Types } from "phaser";
@@ -19,7 +19,7 @@ const config: Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [Boot, Preloader, MainMenu, MainGame, Paper, GameOver],
+  scene: [Boot, Preloader, MainMenu, MainGame, Invaders, GameOver],
 };
 
 export default new Game(config);

@@ -1,6 +1,8 @@
 import { Scene } from "phaser";
 import { PaperObject } from "../objects/PaperObject";
 
+const AVAILABLE_GAMES = ["Invaders"];
+
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
   paperObj: PaperObject;
@@ -11,7 +13,6 @@ export class Game extends Scene {
 
   create() {
     this.paperObj = new PaperObject(this, 100, 100);
-    this.physics.add.existing(this.paperObj);
     this.camera = this.cameras.main;
 
     this.start();
@@ -21,11 +22,12 @@ export class Game extends Scene {
   start() {
     this.add.image(0, 0, "desk").setOrigin(0);
     this.add.image(640, 162, "paper").setOrigin(0);
-    this.scene.launch("Paper"); // Launch the Paper scene overlay
+    this.scene.launch(
+      AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
+    );
     this.sound.play("delicate", { loop: true, volume: 0.2 });
 
     this.input.once("pointerdown", () => {
-      this.scene.stop("Paper");
       this.scene.start("GameOver");
     });
 
@@ -37,6 +39,7 @@ export class Game extends Scene {
   }
 
   shutdown() {
+    AVAILABLE_GAMES.forEach((game) => this.scene.stop(game));
     this.sound.stopAll();
   }
 }
