@@ -36,6 +36,8 @@ export class Preloader extends Scene {
     this.load.image("projectile", "projectile.png");
     this.load.image("invader", "invader.png");
     this.load.image("gameover", "gameover.png");
+    this.load.image("paddle", "paddle.png");
+    this.load.image("goatopen", "goatopen.png");
 
     this.load.audio("delicate", "music/Delicate.mp3");
     this.load.audio("demonware", "music/Demonware.mp3");
