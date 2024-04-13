@@ -10,14 +10,15 @@ export class MainMenu extends Scene {
   }
 
   create() {
+    this.add.image(0, 0, "title-bg").setOrigin(0);
+    this.add.image(960, 500, "title").setScale(0.15);
     this.startGame = new Button({
       scene: this,
       x: 960,
-      y: 580,
+      y: 780,
+      fontSize: 60,
       text: "Start Game",
       onPointerDown: () => this.scene.start("Game"),
     });
-    this.add.image(960, 300, "title");
-    this.cameras.main.setBackgroundColor(0x000000);
   }
 }

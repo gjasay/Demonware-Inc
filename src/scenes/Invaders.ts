@@ -83,9 +83,7 @@ export default class Invaders extends PaperBaseScene {
     }
 
     this.bulletGroup.getChildren().forEach((bullet) => {
-      if (bullet.body && bullet.body.position.y < 0) {
-        bullet.setActive(false);
-      }
+      if (bullet.body && bullet.body.position.y < 0) bullet.destroy();
     });
     this.enemyGroup.getChildren().forEach((enemy) => {
       if (enemy.body && enemy.body.position.y > 740) {

@@ -44,7 +44,7 @@ export class Game extends Scene {
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
     // this.paperSceneName =
     //   AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)];
-    this.paperSceneName = "Flap";
+    this.paperSceneName = "Invaders";
     this.scene.launch(this.paperSceneName, {
       onWin: this.onWin,
       onGameOver: this.onGameOver,
@@ -53,7 +53,12 @@ export class Game extends Scene {
 
   onGameOver = () => {
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
-    this.scene.start("GameOver");
+    if (this.lives > 0) {
+      this.lives--;
+      this.onWin();
+    } else {
+      this.scene.start("GameOver");
+    }
   };
 
   update() {

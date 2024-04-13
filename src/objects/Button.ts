@@ -4,17 +4,19 @@ export default class Button extends Phaser.GameObjects.Text {
     x,
     y,
     text,
+    fontSize = 38,
     onPointerDown,
   }: {
     scene: Phaser.Scene;
     x: number;
     y: number;
+    fontSize?: number;
     text: string;
     onPointerDown: () => void;
   }) {
     super(scene, x, y, text, {
       fontFamily: "monospace",
-      fontSize: 38,
+      fontSize,
       color: "#FF5555",
       stroke: "#000000",
       strokeThickness: 8,
