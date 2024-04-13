@@ -9,15 +9,14 @@ export default class Invaders extends PaperBaseScene {
     super("Invaders");
   }
 
-  create() {
-    super.create();
+  create(data: any) {
+    super.create(data);
 
     this.enemyGroup = this.physics.add.group({
-      key: "pentagram-red",
+      key: "invader",
       collideWorldBounds: true,
       frameQuantity: 24,
       velocityY: 65,
-      setScale: { x: 0.25, y: 0.25 },
       gridAlign: {
         width: 8,
         height: 3,
@@ -28,48 +27,41 @@ export default class Invaders extends PaperBaseScene {
     });
 
     this.bulletGroup = this.physics.add.group({
-      classType: Phaser.Physics.Arcade.Sprite,
-      key: "projectile",
-      frameQuantity: 10,
       maxSize: 10,
-      active: false,
-      visible: false,
-      setXY: { x: 0, y: -100 },
-      setScale: { x: 0.2, y: 0.2 },
+      velocityY: -400,
     });
 
     this.physics.add.collider(
       this.bulletGroup,
       this.enemyGroup,
       (bullet, enemy) => {
-        // @ts-expect-error
-        bullet.setActive(false).setVisible(false);
         enemy.destroy();
+        bullet.destroy();
       }
     );
 
     this.player = this.physics.add
-      .sprite(260, 680, "pentagram-black")
-      .setScale(0.25)
+      .sprite(260, 690, "scrungleton")
+      .setScale(0.5)
       .setOrigin(0.5)
       .setCollideWorldBounds(true);
 
     if (this.input.keyboard) {
       this.keys = this.input.keyboard.createCursorKeys();
       this.input.keyboard.on("keydown-SPACE", () => {
-        const bullet = this.bulletGroup.getFirstDead(
-          false,
-          this.player.x,
-          this.player.y
-        );
         if (this.bulletGroup.countActive() < 10) {
-          bullet.setActive(true).setVisible(true).setVelocityY(-200);
+          this.bulletGroup.createFromConfig({
+            key: "projectile",
+            setXY: { x: this.player.x, y: this.player.y },
+            setScale: { x: 0.2, y: 0.2 },
+          });
         }
       });
     }
 
     this.physics.add.collider(this.player, this.enemyGroup, () => {
-      // this.onGameOver();
+      // @ts-expect-error
+      this.data.onGameOver();
     });
 
     this.events.on("shutdown", this.shutdown, this);
@@ -84,6 +76,11 @@ export default class Invaders extends PaperBaseScene {
       this.player.setAccelerationX(0);
     }
 
+    if (this.enemyGroup.countActive() === 0) {
+      // @ts-expect-error
+      this.data.onWin();
+    }
+
     this.bulletGroup.getChildren().forEach((bullet) => {
       if (bullet.body && bullet.body.position.y < 0) {
         bullet.setActive(false);
@@ -91,7 +88,8 @@ export default class Invaders extends PaperBaseScene {
     });
     this.enemyGroup.getChildren().forEach((enemy) => {
       if (enemy.body && enemy.body.position.y > 740) {
-        // this.onGameOver();
+        // @ts-expect-error
+        this.onGameOver();
       }
     });
   }

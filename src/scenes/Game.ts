@@ -30,9 +30,17 @@ export class Game extends Scene {
       text: "Game Over",
       onPointerDown: () => this.scene.start("GameOver"),
     });
-    this.scene.launch(
-      AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
-    );
+    // const scene = AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
+    let scene = AVAILABLE_GAMES[0];
+    this.scene.launch(scene, {
+      onWin: () => {
+        this.scene.stop(scene);
+      },
+      onGameOver: () => {
+        this.scene.stop(scene);
+        this.scene.start("GameOver");
+      },
+    });
     this.sound.play("delicate", { loop: true, volume: 0.2 });
 
     this.events.on("shutdown", this.shutdown, this);

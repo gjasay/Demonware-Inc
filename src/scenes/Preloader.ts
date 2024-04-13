@@ -33,6 +33,7 @@ export class Preloader extends Scene {
     this.load.image("scrungleton", "scrungleton.png");
     this.load.image("pipe", "pipe.png");
     this.load.image("projectile", "projectile.png");
+    this.load.image("invader", "invader.png");
 
     this.load.audio("delicate", "music/Delicate.mp3");
   }
