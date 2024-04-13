@@ -17,5 +17,7 @@ export class MainMenu extends Scene {
       text: "Start Game",
       onPointerDown: () => this.scene.start("Game"),
     });
+    this.add.image(960, 300, "title");
+    this.cameras.main.setBackgroundColor(0x000000);
   }
 }

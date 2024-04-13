@@ -15,15 +15,15 @@ export default class Button extends Phaser.GameObjects.Text {
     super(scene, x, y, text, {
       fontFamily: "monospace",
       fontSize: 38,
-      color: "#bada55",
+      color: "#FF5555",
       stroke: "#000000",
       strokeThickness: 8,
       align: "center",
     });
     this.setOrigin(0.5)
       .setInteractive()
-      .on("pointerover", () => this.setColor("#00ff00"))
-      .on("pointerout", () => this.setColor("#bada55"))
+      .on("pointerover", () => this.setColor("#FF0000"))
+      .on("pointerout", () => this.setColor("#FF5555"))
       .on("pointerdown", onPointerDown);
     scene.add.existing(this);
   }

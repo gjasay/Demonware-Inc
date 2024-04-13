@@ -7,7 +7,7 @@ export class PaperObject extends Phaser.Physics.Arcade.Sprite {
     this.setAcceleration(0, 0);
     this.setInteractive({ draggable: true });
 
-    this.on("drag", (pointer: any, x: number, y: number) => {
+    this.on("drag", (_pointer: any, x: number, y: number) => {
       this.setPosition(x, y);
     });
   }
