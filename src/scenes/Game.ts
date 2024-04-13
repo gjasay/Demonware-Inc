@@ -7,6 +7,8 @@ const AVAILABLE_GAMES = ["Invaders", "Flap"];
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
   paperObj: PaperObject;
+  paperSceneName: string;
+  lives: number = 3;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
@@ -30,21 +32,28 @@ export class Game extends Scene {
       text: "Game Over",
       onPointerDown: () => this.scene.start("GameOver"),
     });
-    // const scene = AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
-    let scene = AVAILABLE_GAMES[0];
-    this.scene.launch(scene, {
-      onWin: () => {
-        this.scene.stop(scene);
-      },
-      onGameOver: () => {
-        this.scene.stop(scene);
-        this.scene.start("GameOver");
-      },
-    });
+
+    this.onWin();
+
     this.sound.play("delicate", { loop: true, volume: 0.2 });
 
     this.events.on("shutdown", this.shutdown, this);
   }
+
+  onWin = () => {
+    if (this.paperSceneName) this.scene.stop(this.paperSceneName);
+    this.paperSceneName =
+      AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)];
+    this.scene.launch(this.paperSceneName, {
+      onWin: this.onWin,
+      onGameOver: this.onGameOver,
+    });
+  };
+
+  onGameOver = () => {
+    if (this.paperSceneName) this.scene.stop(this.paperSceneName);
+    this.scene.start("GameOver");
+  };
 
   update() {
     this.paperObj.update(); // Added paper object to update loop

@@ -11,6 +11,7 @@ export default class Invaders extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
+    this.physics.world.setBoundsCollision(true, true, true, false);
 
     this.enemyGroup = this.physics.add.group({
       key: "invader",
@@ -89,7 +90,7 @@ export default class Invaders extends PaperBaseScene {
     this.enemyGroup.getChildren().forEach((enemy) => {
       if (enemy.body && enemy.body.position.y > 740) {
         // @ts-expect-error
-        this.onGameOver();
+        this.data.onGameOver();
       }
     });
   }
