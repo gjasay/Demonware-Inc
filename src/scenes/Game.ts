@@ -42,9 +42,8 @@ export class Game extends Scene {
 
   onWin = () => {
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
-    // this.paperSceneName =
-    //   AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)];
-    this.paperSceneName = "Breakout";
+    this.paperSceneName =
+      AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)];
     this.scene.launch(this.paperSceneName, {
       onWin: this.onWin,
       onGameOver: this.onGameOver,
