@@ -3,22 +3,25 @@ import Button from "../objects/Button";
 
 export class MainMenu extends Scene {
   background: GameObjects.Image;
-  startGame: Button;
 
   constructor() {
     super("MainMenu");
   }
 
   create() {
+    this.sound.play("demonware", { loop: true, volume: 0.2 });
     this.add.image(0, 0, "title-bg").setOrigin(0);
-    this.add.image(960, 500, "title").setScale(0.15);
-    this.startGame = new Button({
+    this.add.image(960, 500, "title").setScale(0.75);
+    new Button({
       scene: this,
       x: 960,
       y: 780,
       fontSize: 60,
       text: "Start Game",
-      onPointerDown: () => this.scene.start("Game"),
+      onPointerDown: () => {
+        this.sound.stopAll();
+        this.scene.start("Game");
+      },
     });
   }
 }

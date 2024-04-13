@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import Button from "../objects/Button";
 
 export class GameOver extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -10,20 +11,19 @@ export class GameOver extends Scene {
   }
 
   create() {
-    this.camera = this.cameras.main;
+    this.add.image(0, 0, "title-bg").setOrigin(0);
+    this.add.image(960, 500, "gameover").setScale(0.75);
 
-    this.gameover_text = this.add.text(960, 540, "Game Over", {
-      fontFamily: "Arial Black",
-      fontSize: 64,
-      color: "#ffffff",
-      stroke: "#000000",
-      strokeThickness: 8,
-      align: "center",
-    });
-    this.gameover_text.setOrigin(0.5);
-
-    this.input.once("pointerdown", () => {
-      this.scene.start("MainMenu");
+    new Button({
+      scene: this,
+      x: 960,
+      y: 780,
+      fontSize: 60,
+      text: "Hell Yeah! Play Again!",
+      onPointerDown: () => {
+        this.sound.stopAll();
+        this.scene.start("Game");
+      },
     });
   }
 }
