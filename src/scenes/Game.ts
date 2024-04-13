@@ -11,10 +11,17 @@ export class Game extends Scene {
   create() {
     this.camera = this.cameras.main;
     this.scene.launch("Paper"); // Launch the Paper scene overlay
+    this.sound.play("delicate", { loop: true, volume: 0.2 });
 
     this.input.once("pointerdown", () => {
       this.scene.stop("Paper");
       this.scene.start("GameOver");
     });
+
+    this.events.on("shutdown", this.shutdown, this);
+  }
+
+  shutdown() {
+    this.sound.stopAll();
   }
 }

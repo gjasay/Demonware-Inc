@@ -25,6 +25,7 @@ export class Preloader extends Scene {
   preload() {
     //  Load the assets for the game - Replace with your own assets
     this.load.setPath("assets");
+    this.load.audio("delicate", "music/Delicate.mp3");
   }
 
   create() {
