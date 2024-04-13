@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import { PaperObject } from "../objects/PaperObject";
 
-const AVAILABLE_GAMES = ["Invaders"];
+const AVAILABLE_GAMES = ["Invaders", "Flap"];
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -23,7 +23,8 @@ export class Game extends Scene {
     this.add.image(0, 0, "desk").setOrigin(0);
     this.add.image(640, 162, "paper").setOrigin(0);
     this.scene.launch(
-      AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
+      // AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)]
+      AVAILABLE_GAMES[1]
     );
     this.sound.play("delicate", { loop: true, volume: 0.2 });
 
