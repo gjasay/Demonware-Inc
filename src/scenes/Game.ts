@@ -15,7 +15,6 @@ export class Game extends Scene {
     this.physics.add.existing(this.paperObj);
     this.camera = this.cameras.main;
     this.scene.launch("Paper"); // Launch the Paper scene overlay
-<<<<<<< Updated upstream
     this.sound.play("delicate", { loop: true, volume: 0.2 });
 
     this.input.once("pointerdown", () => {
@@ -26,13 +25,11 @@ export class Game extends Scene {
     this.events.on("shutdown", this.shutdown, this);
   }
 
-  shutdown() {
-    this.sound.stopAll();
-=======
+  update() {
+    this.paperObj.update(); // Added paper object to update loop
   }
 
-  update() {
-    this.paperObj.update();
->>>>>>> Stashed changes
+  shutdown() {
+    this.sound.stopAll();
   }
 }
