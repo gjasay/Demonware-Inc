@@ -43,18 +43,18 @@ export default class Flap extends PaperBaseScene {
       },
     });
 
-    const onPipeTimer = () => {
-      const pipeY = this.pipeYMin + Math.random() * this.pipeYMax;
-      this.pipes.add(new Pipe(this, pipeY, false));
-      this.pipes.add(new Pipe(this, pipeY, true));
-
-      this.time.addEvent({
-        delay:
-          this.pipeTimeIntervalMin + Math.random() * this.pipeTimeIntervalMax,
-        callback: onPipeTimer,
-      });
-    };
-
-    onPipeTimer();
+    this.createPipe();
   }
+
+  createPipe = () => {
+    const pipeY = this.pipeYMin + Math.random() * this.pipeYMax;
+    this.pipes.add(new Pipe(this, pipeY, false));
+    this.pipes.add(new Pipe(this, pipeY, true));
+
+    this.time.addEvent({
+      delay:
+        this.pipeTimeIntervalMin + Math.random() * this.pipeTimeIntervalMax,
+      callback: this.createPipe,
+    });
+  };
 }
