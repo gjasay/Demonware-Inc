@@ -28,8 +28,7 @@ export default class Flap extends PaperBaseScene {
     }
 
     this.physics.add.collider(this.cat, this.pipe, () => {
-      // @ts-expect-error
-      this.data.onGameOver();
+      super.onGameOver();
     });
   }
 

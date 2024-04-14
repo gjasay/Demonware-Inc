@@ -42,10 +42,17 @@ export class Preloader extends Scene {
       frameWidth: 128,
       frameHeight: 128,
     });
+    this.load.spritesheet("baphomet", "baphomet.png", {
+      frameWidth: 128,
+      frameHeight: 128,
+    });
 
     this.load.audio("delicate", "music/Delicate.mp3");
     this.load.audio("demonware", "music/Demonware.mp3");
     this.load.audio("ambience", "sounds/ambience.mp3");
+    this.load.audio("loselife1", "sounds/LoseLife1.mp3");
+    this.load.audio("loselife2", "sounds/LoseLife2.mp3");
+    this.load.audio("loselife3", "sounds/LoseLife3.mp3");
   }
 
   create() {
@@ -63,6 +70,16 @@ export class Preloader extends Scene {
       frames: this.anims.generateFrameNumbers("cat-step", { frames: [0, 2] }),
       frameRate: 5,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: "baphomet-shoot",
+      frames: this.anims.generateFrameNumbers("baphomet", {
+        frames: [0, 1, 2],
+      }),
+      frameRate: 8,
+      repeat: 0,
+      yoyo: true,
     });
 
     //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.

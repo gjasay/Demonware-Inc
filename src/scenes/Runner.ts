@@ -11,11 +11,13 @@ export class Runner extends PaperBaseScene {
   create(data: any) {
     super.create(data);
 
+    this.blocks = this.physics.add.group({ velocityX: -200 });
+
     this.cat = this.physics.add
       .sprite(100, 610, "cat-step")
       .play("cat-walk")
       .setOrigin(0, 0)
-      .setGravityY(300)
+      .setGravityY(1000)
       .setCollideWorldBounds(true);
 
     if (this.input.keyboard) {
@@ -24,13 +26,8 @@ export class Runner extends PaperBaseScene {
   }
 
   update() {
-    if (
-      this.keys.space.isDown &&
-      this.keys.space.repeats === 1 &&
-      this.cat.y > 610
-    ) {
-      this.cat.setVelocityY(-400);
-      this.cat.setAccelerationY(100);
+    if (this.keys.space.isDown && this.cat.y > 610) {
+      this.cat.setVelocityY(-500);
     }
     if (this.cat.y < 610) {
       this.cat.setFrame(2);

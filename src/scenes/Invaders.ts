@@ -30,6 +30,9 @@ export default class Invaders extends PaperBaseScene {
     this.bulletGroup = this.physics.add.group({
       maxSize: 10,
       velocityY: -400,
+      setScale: { x: 0.2, y: 0.2 },
+      key: "projectile",
+      frameQuantity: 0,
     });
 
     this.physics.add.collider(
@@ -42,8 +45,7 @@ export default class Invaders extends PaperBaseScene {
     );
 
     this.player = this.physics.add
-      .sprite(260, 690, "scrungleton")
-      .setRotation(-Math.PI / 2)
+      .sprite(260, 690, "baphomet")
       .setScale(0.5)
       .setOrigin(0.5)
       .setCollideWorldBounds(true);
@@ -51,48 +53,42 @@ export default class Invaders extends PaperBaseScene {
     if (this.input.keyboard) {
       this.keys = this.input.keyboard.createCursorKeys();
       this.input.keyboard.on("keydown-SPACE", () => {
+        this.player.play("baphomet-shoot");
         if (this.bulletGroup.countActive() < 10) {
           this.bulletGroup.createFromConfig({
             key: "projectile",
-            setXY: { x: this.player.x - 10, y: this.player.y - 32 },
+            setXY: { x: this.player.x, y: this.player.y - 32 },
             setScale: { x: 0.2, y: 0.2 },
           });
         }
       });
     }
 
-    this.physics.add.collider(this.player, this.enemyGroup, () => {
-      // @ts-expect-error
-      this.data.onGameOver();
-    });
+    this.physics.add.collider(this.player, this.enemyGroup, () =>
+      super.onGameOver()
+    );
 
     this.events.on("shutdown", this.shutdown, this);
   }
 
   update() {
     if (this.keys.left.isDown) {
-      this.player.setAccelerationX(-200);
+      this.player.setAccelerationX(-250);
     } else if (this.keys.right.isDown) {
-      this.player.setAccelerationX(200);
+      this.player.setAccelerationX(250);
     } else {
       this.player.setAccelerationX(0);
     }
 
     if (this.enemyGroup.countActive() === 0) {
-      // @ts-expect-error
-      this.data.onWin();
+      super.onWin();
     }
 
     this.bulletGroup.getChildren().forEach((bullet) => {
       if (bullet.body && bullet.body.position.y < 0) bullet.destroy();
     });
     this.enemyGroup.getChildren().forEach((enemy) => {
-      if (enemy.body && enemy.body.position.y > 740) {
-        // @ts-expect-error
-        this.data.onGameOver();
-      }
+      if (enemy.body && enemy.body.position.y > 740) super.onGameOver();
     });
   }
-
-  shutdown() {}
 }
