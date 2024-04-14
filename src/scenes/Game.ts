@@ -26,7 +26,6 @@ export class Game extends Scene {
   }
 
   create() {
-    this.paperObj = new PaperObject(this, 100, 100);
     this.camera = this.cameras.main;
 
     this.start();
@@ -35,7 +34,7 @@ export class Game extends Scene {
 
   start() {
     this.add.image(0, 0, "desk").setOrigin(0);
-    this.add.image(640, 162, "paper").setOrigin(0);
+    this.paperObj = new PaperObject(this, 640, 162);
     new Button({
       scene: this,
       x: 100,
@@ -58,7 +57,8 @@ export class Game extends Scene {
     this.playMusic();
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
     const randomIndex = Math.floor(Math.random() * this.games.length);
-    this.paperSceneName = this.games[3];
+    // this.paperSceneName = this.games[5];
+    this.paperSceneName = this.games[randomIndex];
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.games.push(...AVAILABLE_GAMES);
@@ -89,12 +89,12 @@ export class Game extends Scene {
     this.sound.play(MUSIC[this.lives - 1]);
   }
 
-  update() {
-    this.paperObj.update(); // Added paper object to update loop
-  }
-
   onShutdown() {
     AVAILABLE_GAMES.forEach((game) => this.scene.stop(game));
     this.sound.stopAll();
+  }
+
+  update() {
+    // this.paperObj.update();
   }
 }
