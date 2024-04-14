@@ -3,6 +3,7 @@ import { PaperObject } from "../objects/PaperObject";
 import Button from "../objects/Button";
 import Lives from "../objects/Lives";
 
+const MUSIC = ["thisjobsucks", "delicate", "delicate"];
 const AVAILABLE_GAMES = ["Invaders", "Flap", "Breakout", "DrawPentagram"];
 
 export class Game extends Scene {
@@ -11,6 +12,7 @@ export class Game extends Scene {
   paperSceneName: string;
   lives: number = 3;
   livesView: Phaser.GameObjects.Group;
+  music: Phaser.Sound.WebAudioSoundManager;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
@@ -39,15 +41,14 @@ export class Game extends Scene {
 
     this.onWin();
 
-    this.sound.play("thisjobsucks", { loop: true, volume: 0.2 });
     this.sound.play("ambience", { loop: true, volume: 0.1 });
   }
 
   onWin = () => {
+    this.playMusic();
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
-    const randomIndex = Math.floor(Math.random() * AVAILABLE_GAMES.length)
-    this.paperSceneName =
-      AVAILABLE_GAMES[randomIndex];
+    const randomIndex = Math.floor(Math.random() * AVAILABLE_GAMES.length);
+    this.paperSceneName = AVAILABLE_GAMES[randomIndex];
     AVAILABLE_GAMES.splice(randomIndex, 1);
     if (AVAILABLE_GAMES.length === 0) {
       AVAILABLE_GAMES.push("Invaders", "Flap", "Breakout", "DrawPentagram");
@@ -72,6 +73,11 @@ export class Game extends Scene {
       this.scene.start("GameOver");
     }
   };
+
+  playMusic() {
+    MUSIC.forEach((key) => this.sound.stopByKey(key));
+    this.sound.play(MUSIC[this.lives - 1]);
+  }
 
   update() {
     this.paperObj.update(); // Added paper object to update loop
