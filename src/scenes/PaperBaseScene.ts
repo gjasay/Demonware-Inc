@@ -18,6 +18,7 @@ export class PaperBaseScene extends Phaser.Scene {
     this.cameras.main.setViewport(675, 180, 520, 740);
     // set bounds for physics to match camera
     this.physics.world.setBounds(0, 0, 520, 740);
+    this.events.once("shutdown", this.shutdown, this);
   }
 
   onWin() {

@@ -67,8 +67,6 @@ export default class Invaders extends PaperBaseScene {
     this.physics.add.collider(this.player, this.enemyGroup, () =>
       super.onGameOver()
     );
-
-    this.events.on("shutdown", this.shutdown, this);
   }
 
   update() {

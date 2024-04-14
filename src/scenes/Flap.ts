@@ -51,9 +51,4 @@ export default class Flap extends PaperBaseScene {
       super.onWin();
     }
   }
-
-  shutdown() {
-    this.pipes.clear(true, true);
-    this.cat.destroy();
-  }
 }

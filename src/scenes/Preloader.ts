@@ -49,6 +49,7 @@ export class Preloader extends Scene {
     });
 
     this.load.audio("delicate", "music/Delicate.mp3");
+    this.load.audio("thisjobsucks", "music/ThisJobSucks.mp3");
     this.load.audio("demonware", "music/Demonware.mp3");
     this.load.audio("ambience", "sounds/ambience.mp3");
     this.load.audio("loselife1", "sounds/LoseLife1.mp3");
