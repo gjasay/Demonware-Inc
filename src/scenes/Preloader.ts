@@ -39,6 +39,7 @@ export class Preloader extends Scene {
     this.load.image("paddle", "paddle.png");
     this.load.image("goatopen", "goatopen.png");
     this.load.image("brick", "brick.png");
+    this.load.image("slingshot", "slingshot.png");
     this.load.spritesheet("cat-step", "cat-step.png", {
       frameWidth: 128,
       frameHeight: 128,
@@ -46,6 +47,10 @@ export class Preloader extends Scene {
     this.load.spritesheet("baphomet", "baphomet.png", {
       frameWidth: 128,
       frameHeight: 128,
+    });
+    this.load.spritesheet("skullspritesheet", "skullspritesheet.png", {
+      frameWidth: 150,
+      frameHeight: 64,
     });
 
     this.load.audio("delicate", "music/Delicate.mp3");

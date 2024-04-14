@@ -4,7 +4,7 @@ import Button from "../objects/Button";
 import Lives from "../objects/Lives";
 
 const MUSIC = ["thisjobsucks", "delicate", "delicate"];
-const AVAILABLE_GAMES = ["Invaders", "Flap", "Breakout", "DrawPentagram"];
+const AVAILABLE_GAMES = ["Invaders", "Flap", "Breakout", "Slingshot", "DrawPentagram"];
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -12,7 +12,7 @@ export class Game extends Scene {
   paperSceneName: string;
   lives: number = 3;
   livesView: Phaser.GameObjects.Group;
-  music: Phaser.Sound.WebAudioSoundManager;
+  games: string[] = [...AVAILABLE_GAMES];
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
@@ -50,11 +50,12 @@ export class Game extends Scene {
   onWin = () => {
     this.playMusic();
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
-    const randomIndex = Math.floor(Math.random() * AVAILABLE_GAMES.length);
-    this.paperSceneName = AVAILABLE_GAMES[randomIndex];
-    AVAILABLE_GAMES.splice(randomIndex, 1);
-    if (AVAILABLE_GAMES.length === 0) {
-      AVAILABLE_GAMES.push("Invaders", "Flap", "Breakout", "DrawPentagram");
+    const randomIndex = Math.floor(Math.random() * this.games.length)
+    this.paperSceneName =
+      this.games[3];
+    this.games.splice(randomIndex, 1);
+    if (this.games.length === 0) {
+      this.games.push(...AVAILABLE_GAMES);
     }
     console.log("Launch:", this.paperSceneName);
     this.scene.launch(this.paperSceneName, {
