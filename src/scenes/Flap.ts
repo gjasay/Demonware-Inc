@@ -35,6 +35,14 @@ export default class Flap extends PaperBaseScene {
       super.onGameOver();
     });
 
+    this.time.addEvent({
+      delay: this.winTime,
+      callback: () => {
+        if (this.cat.active) super.onWin();
+        else super.onGameOver();
+      },
+    });
+
     const onPipeTimer = () => {
       const pipeY = this.pipeYMin + Math.random() * this.pipeYMax;
       this.pipes.add(new Pipe(this, pipeY, false));
@@ -44,13 +52,6 @@ export default class Flap extends PaperBaseScene {
         delay:
           this.pipeTimeIntervalMin + Math.random() * this.pipeTimeIntervalMax,
         callback: onPipeTimer,
-      });
-      this.time.addEvent({
-        delay: this.winTime,
-        callback: () => {
-          if (this.cat.active) super.onWin();
-          else super.onGameOver();
-        },
       });
     };
 

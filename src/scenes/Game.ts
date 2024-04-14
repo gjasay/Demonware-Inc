@@ -34,7 +34,10 @@ export class Game extends Scene {
       x: 100,
       y: 20,
       text: "Game Over",
-      onPointerDown: () => this.scene.start("GameOver"),
+      onPointerDown: () => {
+        this.lives = 1;
+        this.onGameOver();
+      },
     });
 
     this.livesView = new Lives(this);
