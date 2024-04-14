@@ -5,6 +5,7 @@ import Flap from "./scenes/Flap";
 import { Game as MainGame } from "./scenes/Game";
 import { GameOver } from "./scenes/GameOver";
 import Invaders from "./scenes/Invaders";
+import { Runner } from "./scenes/Runner";
 import { MainMenu } from "./scenes/MainMenu";
 import { Preloader } from "./scenes/Preloader";
 
@@ -30,6 +31,7 @@ const config: Types.Core.GameConfig = {
     Invaders,
     Flap,
     Breakout,
+    Runner,
     GameOver,
     Credits,
   ],
