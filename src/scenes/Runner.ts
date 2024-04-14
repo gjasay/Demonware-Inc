@@ -2,6 +2,7 @@ import { PaperBaseScene } from "./PaperBaseScene";
 
 export class Runner extends PaperBaseScene {
   cat: Phaser.Physics.Arcade.Sprite;
+  blocks: Phaser.Physics.Arcade.Group;
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
   constructor() {
     super("Runner");
@@ -28,7 +29,11 @@ export class Runner extends PaperBaseScene {
       this.keys.space.repeats === 1 &&
       this.cat.y > 610
     ) {
-      this.cat.setVelocityY(-300);
+      this.cat.setVelocityY(-400);
+      this.cat.setAccelerationY(100);
+    }
+    if (this.cat.y < 610) {
+      this.cat.setFrame(2);
     }
     // if (
     //   this.leftEnemyGroup.countActive() === 0 &&

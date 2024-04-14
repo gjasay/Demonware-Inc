@@ -36,6 +36,7 @@ export class Game extends Scene {
     this.onWin();
 
     this.sound.play("delicate", { loop: true, volume: 0.2 });
+    this.sound.play("ambience", { loop: true, volume: 0.1 });
 
     this.events.on("shutdown", this.shutdown, this);
   }

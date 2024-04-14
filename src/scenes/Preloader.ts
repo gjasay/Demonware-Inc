@@ -41,11 +41,11 @@ export class Preloader extends Scene {
     this.load.spritesheet("cat-step", "cat-step.png", {
       frameWidth: 128,
       frameHeight: 128,
-      endFrame: 1,
     });
 
     this.load.audio("delicate", "music/Delicate.mp3");
     this.load.audio("demonware", "music/Demonware.mp3");
+    this.load.audio("ambience", "sounds/ambience.mp3");
   }
 
   create() {
@@ -58,7 +58,14 @@ export class Preloader extends Scene {
       repeat: -1,
     });
 
+    this.anims.create({
+      key: "cat-flap",
+      frames: this.anims.generateFrameNumbers("cat-step", { frames: [0, 2] }),
+      frameRate: 5,
+      repeat: -1,
+    });
+
     //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-    this.scene.start("Game");
+    this.scene.start("MainMenu");
   }
 }
