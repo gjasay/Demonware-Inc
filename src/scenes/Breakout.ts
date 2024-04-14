@@ -3,9 +3,8 @@ import { PaperBaseScene } from "./PaperBaseScene";
 export default class Breakout extends PaperBaseScene {
   paddle: Phaser.Physics.Arcade.Sprite;
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
-  leftEnemyGroup: Phaser.Physics.Arcade.Group;
-  rightEnemyGroup: Phaser.Physics.Arcade.Group;
-  ball: Phaser.Physics.Arcade.Sprite;
+  enemyGroup: Phaser.Physics.Arcade.Group;
+  ball : Phaser.Physics.Arcade.Sprite;
   constructor() {
     super("Breakout");
   }
@@ -26,51 +25,25 @@ export default class Breakout extends PaperBaseScene {
       .setImmovable(true)
       .setCollideWorldBounds(true);
 
-    this.leftEnemyGroup = this.physics.add.group({
-      key: "goatopen",
+    this.enemyGroup = this.physics.add.group({
+      key: "brick",
       collideWorldBounds: true,
       immovable: true,
-      setScale: { x: 0.5, y: 0.5 },
-      frameQuantity: 9,
+      frameQuantity: 18,
       gridAlign: {
-        width: 3,
+        x: 0,
+        width: 6,
         height: 3,
-        cellHeight: 64,
-        cellWidth: 64,
+        cellHeight: 40,
+        cellWidth: 87,
       },
       setOrigin: { x: 0, y: 0 },
     });
 
-    this.rightEnemyGroup = this.physics.add.group({
-      key: "goatopen",
-      collideWorldBounds: true,
-      immovable: true,
-      setScale: { x: 0.5, y: 0.5 },
-      frameQuantity: 9,
-      gridAlign: {
-        width: 3,
-        height: 3,
-        cellHeight: 64,
-        cellWidth: 64,
-      },
-      setOrigin: { x: 5, y: 0 },
-    });
-
     this.physics.add.collider(this.ball, this.paddle);
-    this.physics.add.collider(
-      this.ball,
-      this.leftEnemyGroup,
-      (_ball, enemy) => {
-        enemy.destroy();
-      }
-    );
-    this.physics.add.collider(
-      this.ball,
-      this.rightEnemyGroup,
-      (_ball, enemy) => {
-        enemy.destroy();
-      }
-    );
+    this.physics.add.collider(this.ball, this.enemyGroup, (_ball, enemy) => {
+      enemy.destroy()
+    });
 
     this.ball.setVelocity(200, 500);
 
@@ -90,11 +63,9 @@ export default class Breakout extends PaperBaseScene {
       this.paddle.setVelocityX(0);
     }
 
-    if (
-      this.leftEnemyGroup.countActive() === 0 &&
-      this.rightEnemyGroup.countActive() === 0
-    ) {
-      super.onWin();
+    if (this.enemyGroup.countActive() === 0){
+      // @ts-expect-error
+      this.data.onWin();
     }
 
     if (this.ball.y > 700) {

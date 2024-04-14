@@ -1,28 +1,22 @@
-export default class Pipe extends Phaser.Physics.Arcade.Group {
-  private topPipe: Phaser.GameObjects.Sprite;
-  private bottomPipe: Phaser.GameObjects.Sprite;
+export default class Pipe extends Phaser.Physics.Arcade.Sprite {
   constructor(
-    world: Phaser.Physics.Arcade.World,
     scene: Phaser.Scene,
-    x: number,
-    y: number
+    y: number,
+    flipped: boolean
   ) {
-    super(world, scene, undefined, { immovable: true });
+    super(scene, 500, y, "pipe");
+    scene.physics.add.existing(this);
     scene.add.existing(this);
-
-    this.topPipe = scene.add.sprite(x, y, "pipe");
-    this.topPipe.flipY = true;
-    this.bottomPipe = scene.add.sprite(x, y + 650, "pipe");
-
-    this.add(this.topPipe);
-    this.add(this.bottomPipe);
-
     this.setVelocityX(-150);
+
+
+    this.flipY = flipped;
+    if (!flipped) this.y += 600;
   }
 
   update() {
-    if (this.topPipe.x < 0) {
-      this.destroy(true, true);
+    if (this.x < 0) {
+      this.destroy();
     }
   }
 }

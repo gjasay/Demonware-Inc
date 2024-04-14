@@ -38,6 +38,7 @@ export class Preloader extends Scene {
     this.load.image("gameover", "gameover.png");
     this.load.image("paddle", "paddle.png");
     this.load.image("goatopen", "goatopen.png");
+    this.load.image("brick", "brick.png");
     this.load.spritesheet("cat-step", "cat-step.png", {
       frameWidth: 128,
       frameHeight: 128,
