@@ -3,7 +3,7 @@ import { PaperObject } from "../objects/PaperObject";
 import Button from "../objects/Button";
 import Lives from "../objects/Lives";
 
-const AVAILABLE_GAMES = ["Invaders", "Flap", "Breakout"];
+const AVAILABLE_GAMES = ["Invaders", "Flap", "Breakout", "DrawPentagram"];
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -45,8 +45,13 @@ export class Game extends Scene {
 
   onWin = () => {
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
+    const randomIndex = Math.floor(Math.random() * AVAILABLE_GAMES.length)
     this.paperSceneName =
-      AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)];
+      AVAILABLE_GAMES[randomIndex];
+    AVAILABLE_GAMES.splice(randomIndex, 1);
+    if (AVAILABLE_GAMES.length === 0) {
+      AVAILABLE_GAMES.push("Invaders", "Flap", "Breakout", "DrawPentagram");
+    }
     console.log("Launch:", this.paperSceneName);
     this.scene.launch(this.paperSceneName, {
       onWin: this.onWin,
