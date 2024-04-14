@@ -4,7 +4,14 @@ import Button from "../objects/Button";
 import Lives from "../objects/Lives";
 
 const MUSIC = ["thisjobsucks", "delicate", "delicate"];
-const AVAILABLE_GAMES = ["Invaders", "Flap", "Breakout", "Slingshot", "DrawPentagram"];
+const AVAILABLE_GAMES = [
+  "Invaders",
+  "Flap",
+  "Breakout",
+  "Slingshot",
+  "DrawPentagram",
+  "Runner",
+];
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -50,9 +57,8 @@ export class Game extends Scene {
   onWin = () => {
     this.playMusic();
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
-    const randomIndex = Math.floor(Math.random() * this.games.length)
-    this.paperSceneName =
-      this.games[3];
+    const randomIndex = Math.floor(Math.random() * this.games.length);
+    this.paperSceneName = this.games[3];
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.games.push(...AVAILABLE_GAMES);
