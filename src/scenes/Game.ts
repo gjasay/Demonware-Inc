@@ -19,7 +19,7 @@ export class Game extends Scene {
     this.camera = this.cameras.main;
 
     this.start();
-    this.events.on("shutdown", this.shutdown, this);
+    this.events.once("shutdown", this.onShutdown, this);
   }
 
   start() {
@@ -37,14 +37,13 @@ export class Game extends Scene {
 
     this.sound.play("thisjobsucks", { loop: true, volume: 0.2 });
     this.sound.play("ambience", { loop: true, volume: 0.1 });
-
-    this.events.on("shutdown", this.shutdown, this);
   }
 
   onWin = () => {
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
     this.paperSceneName =
       AVAILABLE_GAMES[Math.floor(Math.random() * AVAILABLE_GAMES.length)];
+    console.log("Launch:", this.paperSceneName);
     this.scene.launch(this.paperSceneName, {
       onWin: this.onWin,
       onGameOver: this.onGameOver,
@@ -67,7 +66,7 @@ export class Game extends Scene {
     this.paperObj.update(); // Added paper object to update loop
   }
 
-  shutdown() {
+  onShutdown() {
     AVAILABLE_GAMES.forEach((game) => this.scene.stop(game));
     this.sound.stopAll();
   }

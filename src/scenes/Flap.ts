@@ -4,7 +4,6 @@ import { PaperBaseScene } from "./PaperBaseScene";
 export default class Flap extends PaperBaseScene {
   private cat: Phaser.Physics.Arcade.Sprite;
   private pipes: Phaser.Physics.Arcade.Group;
-  private pipeTimer: number = 0;
   private pipeTimeIntervalMin: number = 1000;
   private pipeTimeIntervalMax: number = 2000;
   private pipeYMin = -100;
@@ -32,23 +31,29 @@ export default class Flap extends PaperBaseScene {
     }
 
     this.physics.add.collider(this.cat, this.pipes, () => {
+      this.cat.setActive(false);
       super.onGameOver();
     });
-  }
 
-  update() {
-    if (this.time.now > this.pipeTimer) {
+    const onPipeTimer = () => {
       const pipeY = this.pipeYMin + Math.random() * this.pipeYMax;
       this.pipes.add(new Pipe(this, pipeY, false));
       this.pipes.add(new Pipe(this, pipeY, true));
-      this.pipeTimer =
-        this.time.now +
-        this.pipeTimeIntervalMin +
-        Math.random() * this.pipeTimeIntervalMax;
-    }
 
-    if (this.time.now > this.winTime) {
-      super.onWin();
-    }
+      this.time.addEvent({
+        delay:
+          this.pipeTimeIntervalMin + Math.random() * this.pipeTimeIntervalMax,
+        callback: onPipeTimer,
+      });
+      this.time.addEvent({
+        delay: this.winTime,
+        callback: () => {
+          if (this.cat.active) super.onWin();
+          else super.onGameOver();
+        },
+      });
+    };
+
+    onPipeTimer();
   }
 }
