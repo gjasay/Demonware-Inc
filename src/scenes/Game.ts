@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import { PaperObject } from "../objects/PaperObject";
 import Button from "../objects/Button";
+import Lives from "../objects/Lives";
 
 const AVAILABLE_GAMES = ["Invaders", "Flap", "Breakout"];
 
@@ -9,6 +10,7 @@ export class Game extends Scene {
   paperObj: PaperObject;
   paperSceneName: string;
   lives: number = 3;
+  livesView: Phaser.GameObjects.Group;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
@@ -33,6 +35,8 @@ export class Game extends Scene {
       onPointerDown: () => this.scene.start("GameOver"),
     });
 
+    this.livesView = new Lives(this);
+
     this.onWin();
 
     this.sound.play("thisjobsucks", { loop: true, volume: 0.2 });
@@ -55,6 +59,8 @@ export class Game extends Scene {
     this.sound.play(`loselife${4 - this.lives}`);
     if (this.lives > 1) {
       this.lives--;
+      // @ts-expect-error
+      this.livesView.setLives(this.lives);
       this.onWin();
     } else {
       this.lives = 3;
