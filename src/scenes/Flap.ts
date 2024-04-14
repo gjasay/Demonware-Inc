@@ -16,7 +16,7 @@ export default class Flap extends PaperBaseScene {
   create(data: any) {
     super.create(data);
 
-    this.pipes = this.physics.add.group({velocityX: -150});
+    this.pipes = this.physics.add.group({ velocityX: -150 });
 
     this.cat = this.physics.add
       .sprite(150, 150, "cat-step")
@@ -37,24 +37,10 @@ export default class Flap extends PaperBaseScene {
   }
 
   update() {
-
     if (this.time.now > this.pipeTimer) {
-      console.log("creating pipe")
       const pipeY = this.pipeYMin + Math.random() * this.pipeYMax;
-      this.pipes.add(
-        new Pipe(
-          this,
-          pipeY,
-          false
-        )
-      );
-      this.pipes.add(
-        new Pipe(
-          this,
-          pipeY,
-          true
-        )
-      );
+      this.pipes.add(new Pipe(this, pipeY, false));
+      this.pipes.add(new Pipe(this, pipeY, true));
       this.pipeTimer =
         this.time.now +
         this.pipeTimeIntervalMin +
@@ -62,8 +48,7 @@ export default class Flap extends PaperBaseScene {
     }
 
     if (this.time.now > this.winTime) {
-      // @ts-expect-error
-      this.data.onWin();
+      super.onWin();
     }
   }
 

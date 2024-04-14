@@ -6,7 +6,7 @@ export class PaperBaseScene extends Phaser.Scene {
       physics: {
         arcade: {
           gravity: { x: 0, y: 0 },
-          debug: process.env.NODE_ENV === "development",
+          // debug: process.env.NODE_ENV === "development",
         },
       },
     });

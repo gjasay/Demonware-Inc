@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { PaperObject } from "../objects/PaperObject";
 import Button from "../objects/Button";
 
-const AVAILABLE_GAMES = ["Invaders", "Flap", "Runner", "Breakout"];
+const AVAILABLE_GAMES = ["Invaders", "Flap", "Breakout"];
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;

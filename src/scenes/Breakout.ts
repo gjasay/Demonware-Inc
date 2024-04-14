@@ -4,7 +4,7 @@ export default class Breakout extends PaperBaseScene {
   paddle: Phaser.Physics.Arcade.Sprite;
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
   enemyGroup: Phaser.Physics.Arcade.Group;
-  ball : Phaser.Physics.Arcade.Sprite;
+  ball: Phaser.Physics.Arcade.Sprite;
   constructor() {
     super("Breakout");
   }
@@ -42,7 +42,7 @@ export default class Breakout extends PaperBaseScene {
 
     this.physics.add.collider(this.ball, this.paddle);
     this.physics.add.collider(this.ball, this.enemyGroup, (_ball, enemy) => {
-      enemy.destroy()
+      enemy.destroy();
     });
 
     this.ball.setVelocity(200, 500);
@@ -63,9 +63,8 @@ export default class Breakout extends PaperBaseScene {
       this.paddle.setVelocityX(0);
     }
 
-    if (this.enemyGroup.countActive() === 0){
-      // @ts-expect-error
-      this.data.onWin();
+    if (this.enemyGroup.countActive() === 0) {
+      super.onWin();
     }
 
     if (this.ball.y > 700) {
