@@ -1,5 +1,9 @@
 import { PaperBaseScene } from "./PaperBaseScene";
 
+const RELEASE_SOUNDS = ["ballrelease1", "ballrelease2", "ballrelease3"];
+const RIP_SOUNDS = ["filerip1", "filerip2", "filerip3"];
+const STRETCH_SOUNDS = ["slingshotstretch1", "slingshotstretch2", "slingshotstretch3"];
+
 export class Slingshot extends PaperBaseScene {
   isPullingBack: boolean = false;
   velocity: number = 0;
@@ -78,7 +82,7 @@ export class Slingshot extends PaperBaseScene {
       //Spacebar input for shooting
       this.input.keyboard.on("keydown-SPACE", (e: KeyboardEvent) => {
         if (!e.repeat && !this.isPullingBack) {
-          console.log("Created new projectile");
+          this.sound.play(STRETCH_SOUNDS[Math.floor(Math.random() * 3)]);
           this.isPullingBack = true;
           const newProjectile = this.projectileGroup.createFromConfig({
             key: "projectile",
@@ -93,6 +97,7 @@ export class Slingshot extends PaperBaseScene {
         }
       });
       this.input.keyboard.on("keyup-SPACE", () => {
+        this.sound.play(RELEASE_SOUNDS[Math.floor(Math.random() * 3)]);
         this.isPullingBack = false;
         this.shoot();
         this.velocity = 0;
@@ -120,6 +125,7 @@ export class Slingshot extends PaperBaseScene {
         }
         if (target instanceof Phaser.Physics.Arcade.Sprite) {
           target.play("file-explode").on("animationcomplete", () => {
+            this.sound.play(RIP_SOUNDS[Math.floor(Math.random() * 3)]);
             target.destroy();
           });
         }

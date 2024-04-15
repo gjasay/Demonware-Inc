@@ -92,6 +92,15 @@ export class Preloader extends Scene {
     this.load.audio("paperhandle1", "sounds/PaperHandle1.mp3");
     this.load.audio("paperhandle2", "sounds/PaperHandle2.mp3");
     this.load.audio("paperhandle3", "sounds/PaperHandle3.mp3");
+    this.load.audio("ballrelease1", "sounds/BallRelease1.wav");
+    this.load.audio("ballrelease2", "sounds/BallRelease2.wav");
+    this.load.audio("ballrelease3", "sounds/BallRelease3.wav");
+    this.load.audio("filerip1", "sounds/FileRip1.wav");
+    this.load.audio("filerip2", "sounds/FileRip2.wav");
+    this.load.audio("filerip3", "sounds/FileRip3.wav");
+    this.load.audio("slingshotstretch1", "sounds/SlingshotStretch1.wav");
+    this.load.audio("slingshotstretch2", "sounds/SlingshotStretch2.wav");
+    this.load.audio("slingshotstretch3", "sounds/SlingshotStretch3.wav");
   }
 
   create() {
