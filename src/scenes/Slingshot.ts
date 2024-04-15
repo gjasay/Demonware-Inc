@@ -23,6 +23,22 @@ export class Slingshot extends PaperBaseScene {
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.velocity = 0;
     this.projectileCount = 15;
+
+    switch (this.difficulty) {
+      case 1:
+        this.maxVelocity = -800;
+        this.milisecondsToSubtractVelocity = .75;
+        break;
+      case 2:
+        this.maxVelocity = -1000;
+        this.milisecondsToSubtractVelocity = .5;
+        break;
+      default:
+        this.maxVelocity = -500;
+        this.milisecondsToSubtractVelocity = 1;
+        break;
+    }
+
     this.ammoText = this.add.text(0, 0, `Ammo: ${this.projectileCount}`, {
       color: "#ff0000",
       fontSize: 40,
