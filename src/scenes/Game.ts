@@ -120,9 +120,7 @@ export class Game extends Scene {
       x: 930,
       y: 550,
       onComplete: this.startGame,
-    })
-      .setOrigin(0.5)
-      .setActive(false);
+    }).setOrigin(0.5);
 
     this.sound.play("ambience", { loop: true, volume: 0.2 });
 
@@ -136,11 +134,6 @@ export class Game extends Scene {
     });
 
     this.onWin(true);
-
-    this.input.once("pointerdown", () => {
-      this.paper.setFrame(0);
-      this.startGame();
-    });
   }
 
   onWin = (firstPlay?: boolean) => {
@@ -157,6 +150,7 @@ export class Game extends Scene {
   };
 
   startGame = () => {
+    this.paper.setActive(false).setFrame(0);
     this.playMusic();
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
