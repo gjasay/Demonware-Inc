@@ -1,4 +1,5 @@
 export class PaperBaseScene extends Phaser.Scene {
+  difficulty: number;
   gameOver: boolean = false;
   constructor(key: string) {
     super({
@@ -14,6 +15,7 @@ export class PaperBaseScene extends Phaser.Scene {
 
   create(data: any) {
     this.data = data;
+    this.difficulty = data.difficulty;
     // position paper scene and set size
     this.cameras.main.setViewport(675, 180, 520, 740);
     // set bounds for physics to match camera

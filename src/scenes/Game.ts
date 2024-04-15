@@ -31,6 +31,7 @@ export class Game extends Scene {
   timerTickEvent: Phaser.Time.TimerEvent;
   score: number = 0;
   scoreText: Phaser.GameObjects.Text;
+  difficulty: number = 1;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
@@ -160,10 +161,12 @@ export class Game extends Scene {
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
+      this.difficulty++;
       this.games.push(...AVAILABLE_GAMES);
     }
     console.log("Launch:", this.paperSceneName);
     this.scene.launch(this.paperSceneName, {
+      difficulty: this.difficulty,
       onWin: this.onWin,
       onGameOver: this.onGameOver,
       startTimer: this.startTimer,
