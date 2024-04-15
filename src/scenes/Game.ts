@@ -1,7 +1,15 @@
 import { Scene } from "phaser";
 import { Paper as Paper } from "../objects/Paper";
-import Button from "../objects/Button";
 import Lives from "../objects/Lives";
+
+const scoreFormatter = new Intl.NumberFormat("en-US", {
+  minimumIntegerDigits: 8,
+  useGrouping: false,
+});
+
+const timeFormatter = new Intl.NumberFormat("en-US", {
+  minimumIntegerDigits: 2,
+});
 
 const MUSIC = ["thisjobsucks", "middayslump", "delicate"];
 const AVAILABLE_GAMES = [
@@ -73,35 +81,43 @@ export class Game extends Scene {
       .setActive(false);
 
     this.beatTheClockText = this.add
-      .text(20, 950, "Beat the clock", {
+      .text(1400, 840, "Beat the clock", {
         fontSize: 24,
+        fontStyle: "bold",
         color: "#000000",
       })
+      .setRotation(-1.1)
       .setOrigin(0)
       .setVisible(false);
 
     this.surviveText = this.add
-      .text(25, 950, "Survive for", {
+      .text(1400, 840, "Survive for", {
         fontSize: 24,
+        fontStyle: "bold",
         color: "#000000",
       })
+      .setRotation(-1.1)
       .setOrigin(0)
       .setVisible(false);
 
     this.timerText = this.add
-      .text(120, 1000, "00s", {
-        fontSize: 32,
+      .text(1550, 736, "00s", {
+        fontSize: 54,
         color: "#ff0000",
+        stroke: "#000000",
+        strokeThickness: 4,
       })
+      .setRotation(0.48)
       .setOrigin(0);
 
     this.scoreText = this.add
-      .text(0, 0, `Demons Summoned: ${this.score}`, {
+      .text(318, 848, scoreFormatter.format(this.score), {
         fontSize: 40,
         color: "#ff0000",
         stroke: "#000000",
         strokeThickness: 4,
       })
+      .setRotation(-0.42)
       .setOrigin(0);
 
     this.livesView = new Lives(this);
@@ -129,7 +145,7 @@ export class Game extends Scene {
       this.timerEvent?.remove();
       this.paper.setActive(true).setFrame(1);
       this.score++;
-      this.scoreText.setText(`Demons Summoned: ${this.score}`);
+      this.scoreText.setText(scoreFormatter.format(this.score));
     }
   };
 
@@ -181,7 +197,7 @@ export class Game extends Scene {
     this.timerTickEvent = this.time.addEvent({
       delay: 1000,
       callback: () => {
-        this.timerText.setText(`${this.timerSeconds}s`);
+        this.timerText.setText(`${timeFormatter.format(this.timerSeconds)}s`);
         this.timerSeconds--;
       },
       repeat: this.timerSeconds,
