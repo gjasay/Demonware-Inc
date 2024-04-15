@@ -20,6 +20,7 @@ export default class Breakout extends PaperBaseScene {
       .sprite(400, 300, "projectile")
       .setOrigin(0.5)
       .setScale(0.5)
+      .setCircle(32)
       .setCollideWorldBounds(true)
       .setBounce(1);
 
@@ -48,12 +49,9 @@ export default class Breakout extends PaperBaseScene {
       this.sound.play(
         PADDLE_SOUNDS[Math.floor(Math.random() * PADDLE_SOUNDS.length)]
       );
-      if (this.paddle.body?.velocity.x != 0) {
-        // @ts-expect-error
-        this.ball.setVelocityX(this.paddle.body?.velocity.x * 1.25)
-      }
-      
+      this.ball.setVelocityX((this.ball.x - this.paddle.x) * 6.66);
     });
+
     this.physics.add.collider(this.ball, this.enemyGroup, (_ball, enemy) => {
       enemy.destroy();
       this.sound.play(

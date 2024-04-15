@@ -71,13 +71,19 @@ export class Game extends Scene {
       .setOrigin(0.5)
       .setActive(false);
 
-    this.winText = this.add.text(0, 0, 
-    `   DEMON SUMMONED
+    this.winText = this.add
+      .text(
+        0,
+        0,
+        `   DEMON SUMMONED
 
   FILE IN THE FOLDER
 
-    ON YOUR RIGHT`, 
-    {fontSize: 50, color: "#ff0000"}).setOrigin(0.5).setVisible(false);
+    ON YOUR RIGHT`,
+        { fontSize: 50, color: "#ff0000" }
+      )
+      .setOrigin(0.5)
+      .setVisible(false);
 
     new Button({
       scene: this,
@@ -242,6 +248,5 @@ export class Game extends Scene {
     } else {
       this.winText.setScale(1);
     }
-    
   }
 }
