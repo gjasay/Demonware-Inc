@@ -54,6 +54,10 @@ export class Preloader extends Scene {
       frameWidth: 150,
       frameHeight: 64,
     });
+    this.load.spritesheet("filespritesheet", "filespritesheet.png", {
+      frameWidth: 128,
+      frameHeight: 128,
+    });
 
     this.load.audio("delicate", "music/Delicate.mp3");
     this.load.audio("thisjobsucks", "music/ThisJobSucks.mp3");
@@ -101,6 +105,15 @@ export class Preloader extends Scene {
       frameRate: 8,
       repeat: 0,
       yoyo: true,
+    });
+
+    this.anims.create({
+      key: "file-explode",
+      frames: this.anims.generateFrameNumbers("filespritesheet", {
+        frames: [1, 0],
+      }),
+      frameRate: 5,
+      repeat: 0,
     });
 
     //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.

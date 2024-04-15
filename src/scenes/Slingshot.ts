@@ -9,6 +9,7 @@ export class Slingshot extends PaperBaseScene {
   projectile: Phaser.Physics.Arcade.Sprite;
   projectileGroup: Phaser.Physics.Arcade.Group;
   projectileCount: number;
+  ammoText: Phaser.GameObjects.Text;
   targetGroup: Phaser.Physics.Arcade.Group;
   currentProjectile: Phaser.Physics.Arcade.Sprite;
   slingshot: Phaser.Physics.Arcade.Sprite;
@@ -21,6 +22,10 @@ export class Slingshot extends PaperBaseScene {
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.velocity = 0;
     this.projectileCount = 10;
+    this.ammoText = this.add.text(0, 0, `Ammo: ${this.projectileCount}`, {
+      color: "#ff0000",
+      fontSize: 40,
+    });
 
     this.projectileGroup = this.physics.add.group({
       key: "projectile",
@@ -31,11 +36,13 @@ export class Slingshot extends PaperBaseScene {
       setScale: { x: 0.5, y: 0.5 },
       active: true,
     });
-    this.targetGroup = this.physics.add.group({bounceX: 1, collideWorldBounds: true});
+    this.targetGroup = this.physics.add.group({bounceX: 1, collideWorldBounds: true, immovable: true});
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         const newTarget = this.targetGroup.createFromConfig({
-          key: "invader",
+          key: "filespritesheet",
+          frame: 1,
+          setScale: { x: 0.5, y: 0.5 },
           setXY: { x: 200 + i * 100, y: 100 + j * 100 },
         });
         newTarget[0].setVelocityX(Math.random() * (200 + 200) - 200);
@@ -84,7 +91,11 @@ export class Slingshot extends PaperBaseScene {
         projectile.setActive(false);
         projectile.setPosition(-100, -100);
       }
-      target.destroy();
+      if (target instanceof Phaser.Physics.Arcade.Sprite) {
+        target.play("file-explode").on("animationcomplete", () => {
+          target.destroy();
+        });
+      }
     });
 
   }
@@ -117,6 +128,7 @@ export class Slingshot extends PaperBaseScene {
     if (this.currentProjectile != null) this.currentProjectile.setVelocityY(this.velocity);
     if (this.projectileCount > 0) {
       this.projectileCount--;
+      this.ammoText.setText(`Ammo: ${this.projectileCount}`);
     }
     console.log(this.projectileCount, this.projectileGroup.countActive());
   }
