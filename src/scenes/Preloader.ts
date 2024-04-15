@@ -89,6 +89,9 @@ export class Preloader extends Scene {
     this.load.audio("flap1", "sounds/Flap1.mp3");
     this.load.audio("flap2", "sounds/Flap2.mp3");
     this.load.audio("flap3", "sounds/Flap3.mp3");
+    this.load.audio("paperhandle1", "sounds/PaperHandle1.mp3");
+    this.load.audio("paperhandle2", "sounds/PaperHandle2.mp3");
+    this.load.audio("paperhandle3", "sounds/PaperHandle3.mp3");
   }
 
   create() {

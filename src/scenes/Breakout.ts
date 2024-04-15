@@ -62,7 +62,9 @@ export default class Breakout extends PaperBaseScene {
       this.sound.play(
         PADDLE_SOUNDS[Math.floor(Math.random() * PADDLE_SOUNDS.length)]
       );
-      this.ball.setVelocityX((this.ball.x - this.paddle.x) * 6.66 * this.velocityMultiplier);
+      this.ball.setVelocityX(
+        (this.ball.x - this.paddle.x) * 6.66 * this.velocityMultiplier
+      );
     });
 
     this.physics.add.collider(this.ball, this.enemyGroup, (_ball, enemy) => {

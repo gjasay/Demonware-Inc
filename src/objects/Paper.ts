@@ -44,6 +44,7 @@ export class Paper extends Phaser.Physics.Arcade.Sprite {
   }
 
   _onComplete() {
+    this.scene.sound.play(`paperhandle${Math.floor(Math.random() * 3) + 1}`);
     this.setPosition(930, 550);
     this.setActive(false).setFrame(0);
     this.onComplete?.();

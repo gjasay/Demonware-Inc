@@ -50,6 +50,8 @@ export class Game extends Scene {
   }
 
   start() {
+    this.difficulty = 1;
+    console.log("Difficulty:", this.difficulty);
     this.add.image(0, 0, "desk").setOrigin(0);
     this.folder = this.add
       .sprite(1920, 780, "folders")
@@ -161,6 +163,7 @@ export class Game extends Scene {
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.difficulty++;
+      console.log("Difficulty:", this.difficulty);
       this.games.push(...AVAILABLE_GAMES);
     }
     console.log("Launch:", this.paperSceneName);
