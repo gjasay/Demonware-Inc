@@ -4,8 +4,6 @@ export class Runner extends PaperBaseScene {
   cat: Phaser.Physics.Arcade.Sprite;
   blocks: Phaser.Physics.Arcade.Group;
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
-  timeText: Phaser.GameObjects.Text;
-  seconds: number = 0;
 
   constructor() {
     super("Runner");
@@ -16,12 +14,6 @@ export class Runner extends PaperBaseScene {
     super.startTimer(15, true);
     this.blocks = this.physics.add.group();
     this.add.line(0, 0, 180, 740, 830, 740, 0xff0000);
-
-    this.seconds = 14;
-    this.timeText = this.add.text(50, 1000, "15s", {
-      color: "#ff0000",
-      fontSize: 30,
-    });
 
     this.cat = this.physics.add
       .sprite(50, 610, "cat-step")
@@ -38,26 +30,6 @@ export class Runner extends PaperBaseScene {
     this.physics.add.collider(this.cat, this.blocks, () => {
       this.cat.setActive(false);
       super.onGameOver();
-    });
-
-    this.time.addEvent({
-      delay: 15000,
-      callback: () => {
-        if (this.cat.active) super.onWin();
-        else super.onGameOver();
-      },
-    });
-
-    this.time.addEvent({
-      delay: 1000,
-
-      callback: () => {
-        if (this.cat.active) {
-          this.timeText.setText(`${this.seconds}s`);
-          this.seconds--;
-        }
-      },
-      loop: true,
     });
 
     this.createBlock();

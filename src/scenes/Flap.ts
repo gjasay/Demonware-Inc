@@ -9,8 +9,6 @@ export default class Flap extends PaperBaseScene {
   private pipeYMin = -100;
   private pipeYMax = 200;
   private winTime = 15000;
-  private timeText: Phaser.GameObjects.Text;
-  private seconds: number = 0;
 
   constructor() {
     super("Flap");
@@ -19,23 +17,6 @@ export default class Flap extends PaperBaseScene {
   create(data: any) {
     super.create(data);
     super.startTimer(15, true);
-    this.seconds = 14;
-    this.timeText = this.add.text(0, 0, "15s", {
-      color: "#ff0000",
-      fontSize: 30,
-    });
-
-    this.time.addEvent({
-      delay: 1000,
-
-      callback: () => {
-        if (this.cat.active) {
-          this.timeText.setText(`${this.seconds}s`);
-          this.seconds--;
-        }
-      },
-      loop: true,
-    });
 
     this.pipes = this.physics.add.group({ velocityX: -150 });
 
@@ -61,14 +42,6 @@ export default class Flap extends PaperBaseScene {
     this.physics.add.collider(this.cat, this.pipes, () => {
       this.cat.setActive(false);
       super.onGameOver();
-    });
-
-    this.time.addEvent({
-      delay: this.winTime,
-      callback: () => {
-        if (this.cat.active) super.onWin();
-        else super.onGameOver();
-      },
     });
 
     this.createPipe();
