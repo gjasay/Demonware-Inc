@@ -58,6 +58,10 @@ export class Preloader extends Scene {
       frameWidth: 128,
       frameHeight: 128,
     });
+    this.load.spritesheet("damned", "damned.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
 
     this.load.audio("delicate", "music/Delicate.mp3");
     this.load.audio("middayslump", "music/MidDaySlump.mp3");
@@ -118,6 +122,13 @@ export class Preloader extends Scene {
       }),
       frameRate: 8,
       repeat: 0,
+    });
+
+    this.anims.create({
+      key: "damned-walk",
+      frames: this.anims.generateFrameNumbers("damned", { frames: [0, 1] }),
+      frameRate: 5,
+      repeat: -1,
     });
 
     //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.

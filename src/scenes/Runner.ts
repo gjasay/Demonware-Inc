@@ -2,7 +2,7 @@ import { PaperBaseScene } from "./PaperBaseScene";
 
 export class Runner extends PaperBaseScene {
   cat: Phaser.Physics.Arcade.Sprite;
-  blocks: Phaser.Physics.Arcade.Group;
+  damned: Phaser.Physics.Arcade.Group;
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
 
   constructor() {
@@ -12,7 +12,7 @@ export class Runner extends PaperBaseScene {
   create(data: any) {
     super.create(data);
     super.startTimer(15, true);
-    this.blocks = this.physics.add.group();
+    this.damned = this.physics.add.group({ velocityX: -200 });
     this.add.line(0, 0, 180, 740, 830, 740, 0xff0000);
 
     this.cat = this.physics.add
@@ -27,23 +27,24 @@ export class Runner extends PaperBaseScene {
       this.keys = this.input.keyboard.createCursorKeys();
     }
 
-    this.physics.add.collider(this.cat, this.blocks, () => {
+    this.physics.add.collider(this.cat, this.damned, () => {
       this.cat.setActive(false);
       super.onGameOver();
     });
 
-    this.createBlock();
+    this.createDamned();
   }
 
-  createBlock = () => {
-    const block = this.add.rectangle(480, 714, 50, 50, 0xff0000);
-    this.blocks.add(block);
-    const body = block.body as Phaser.Physics.Arcade.Body;
-    body.setCircle(22, 3, 3);
-    body.setVelocityX(-200);
+  createDamned = () => {
+    const damned = this.physics.add
+      .sprite(480, 714, "damned")
+      .setScale(0.8)
+      .setCircle(25, 6, 4)
+      .play("damned-walk");
+    this.damned.add(damned);
     this.time.addEvent({
       delay: 1000 + Math.random() * 1500,
-      callback: this.createBlock,
+      callback: this.createDamned,
     });
   };
 
@@ -58,7 +59,7 @@ export class Runner extends PaperBaseScene {
       this.cat.setFrame(2);
     }
 
-    this.blocks.getChildren().forEach((block) => {
+    this.damned.getChildren().forEach((block) => {
       const body = block.body as Phaser.Physics.Arcade.Body;
       if (body.x < -50) {
         block.destroy();

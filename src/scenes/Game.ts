@@ -78,10 +78,10 @@ export class Game extends Scene {
         0,
         `   DEMON SUMMONED
 
-  FILE IN THE FOLDER
+ FILE IN THE FOLDER
 
     ON YOUR RIGHT`,
-        { fontSize: 50, color: "#ff0000" }
+        { fontSize: 48, color: "#ff0000" }
       )
       .setOrigin(0.5)
       .setVisible(false);
@@ -158,6 +158,7 @@ export class Game extends Scene {
     this.playMusic();
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
+    this.paperSceneName = "Runner";
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.games.push(...AVAILABLE_GAMES);
