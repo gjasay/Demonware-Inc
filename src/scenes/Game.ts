@@ -160,7 +160,6 @@ export class Game extends Scene {
     this.playMusic();
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
-    this.paperSceneName = "Invaders";
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.difficulty++;
