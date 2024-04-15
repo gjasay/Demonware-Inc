@@ -22,7 +22,6 @@ const AVAILABLE_GAMES = [
 ];
 
 export class Game extends Scene {
-  camera: Phaser.Cameras.Scene2D.Camera;
   folder: Phaser.GameObjects.Sprite;
   folderOverlap: boolean = false;
   games: string[] = [...AVAILABLE_GAMES];

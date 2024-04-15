@@ -24,7 +24,9 @@ export default class Button extends Phaser.GameObjects.Text {
       .setInteractive()
       .on("pointerover", () => this.setColor("#FF0000").setStroke("#ffa500", 2))
       .on("pointerout", () => this.setColor("#990000").setStroke("#000", 0))
-      .on("pointerdown", onPointerDown);
+      .on("pointerdown", () => {
+        if (this.active) onPointerDown();
+      });
     scene.add.existing(this);
   }
 }

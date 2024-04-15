@@ -13,7 +13,7 @@ export class MainMenu extends Scene {
     this.add.image(0, 0, "title-bg").setOrigin(0);
     this.add.image(960, 500, "title").setScale(0.75);
 
-    new Button({
+    const startGame = new Button({
       scene: this,
       x: 960,
       y: 780,
@@ -23,7 +23,7 @@ export class MainMenu extends Scene {
         this.sound.stopAll();
         this.scene.start("Game");
       },
-    });
+    }).setActive(false);
 
     new Button({
       scene: this,
@@ -33,6 +33,16 @@ export class MainMenu extends Scene {
       text: "Full Screen",
       onPointerDown: () =>
         document.querySelector("canvas")?.requestFullscreen(),
+    });
+
+    this.cameras.main.setAlpha(0);
+    this.tweens.add({
+      targets: this.cameras.main,
+      alpha: 1,
+      duration: 3000,
+      onComplete: () => {
+        startGame.setActive(true);
+      },
     });
   }
 }
