@@ -41,8 +41,8 @@ export class Paper extends Phaser.Physics.Arcade.Sprite {
   }
 
   _onComplete() {
-    console.log("set position");
     this.setPosition(930, 550);
+    this.setActive(false);
     this.onComplete?.();
   }
 

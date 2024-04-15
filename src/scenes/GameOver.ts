@@ -17,7 +17,7 @@ export class GameOver extends Scene {
     this.time.addEvent({
       delay: 3000,
       callback: () => {
-        this.sound.play(`gameover${Math.floor(Math.random() * 3) + 1}`);
+        this.sound.play(`gameover${1 + Math.floor(Math.random() * 5)}`);
       },
     });
 
