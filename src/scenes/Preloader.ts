@@ -38,6 +38,10 @@ export class Preloader extends Scene {
     this.load.image("goatopen", "goatopen.png");
     this.load.image("brick", "brick.png");
     this.load.image("slingshot", "slingshot.png");
+    this.load.spritesheet("folders", "folders.png", {
+      frameWidth: 630,
+      frameHeight: 820,
+    });
     this.load.spritesheet("cat-step", "cat-step.png", {
       frameWidth: 128,
       frameHeight: 128,
@@ -62,11 +66,14 @@ export class Preloader extends Scene {
     this.load.audio("gameover2", "sounds/GameOver2.mp3");
     this.load.audio("gameover3", "sounds/GameOver3.mp3");
     this.load.audio("gameover4", "sounds/GameOver4.mp3");
-    this.load.audio("gameoves5", "sounds/GameOver5.mp3");
+    this.load.audio("gameover5", "sounds/GameOver5.mp3");
     this.load.audio("break1", "sounds/break1.wav");
     this.load.audio("break2", "sounds/break2.wav");
     this.load.audio("break3", "sounds/break3.wav");
     this.load.audio("break4", "sounds/break4.wav");
+    this.load.audio("flap1", "sounds/Flap1.mp3");
+    this.load.audio("flap2", "sounds/Flap2.mp3");
+    this.load.audio("flap3", "sounds/Flap3.mp3");
   }
 
   create() {

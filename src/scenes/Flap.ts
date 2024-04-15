@@ -4,8 +4,8 @@ import { PaperBaseScene } from "./PaperBaseScene";
 export default class Flap extends PaperBaseScene {
   private cat: Phaser.Physics.Arcade.Sprite;
   private pipes: Phaser.Physics.Arcade.Group;
-  private pipeTimeIntervalMin: number = 1000;
-  private pipeTimeIntervalMax: number = 2000;
+  private pipeTimeIntervalMin: number = 1250;
+  private pipeTimeIntervalMax: number = 2250;
   private pipeYMin = -100;
   private pipeYMax = 200;
   private winTime = 30000;
@@ -26,7 +26,12 @@ export default class Flap extends PaperBaseScene {
 
     if (this.input.keyboard) {
       this.input.keyboard.on("keydown-SPACE", (e: KeyboardEvent) => {
-        if (!e.repeat) this.cat.setVelocityY(-225);
+        if (!e.repeat) {
+          this.sound.play(`flap${Math.floor(Math.random() * 3) + 1}`, {
+            volume: 0.2,
+          });
+          this.cat.setVelocityY(-225);
+        }
       });
     }
 

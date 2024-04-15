@@ -13,7 +13,7 @@ export class Runner extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
-    this.seconds = 30;
+    this.seconds = 60;
     this.blocks = this.physics.add.group();
     this.add.line(0, 0, 180, 740, 830, 740, 0xff0000);
     this.timeText = this.add.text(0, 0, "Stay alive for: 30s", {
@@ -75,6 +75,9 @@ export class Runner extends PaperBaseScene {
 
   update() {
     if (this.keys.space.isDown && this.cat.y > 610) {
+      this.sound.play(`flap${Math.floor(Math.random() * 3) + 1}`, {
+        volume: 0.2,
+      });
       this.cat.setVelocityY(-500);
     }
     if (this.cat.y < 610) {

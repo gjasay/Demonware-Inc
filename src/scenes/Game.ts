@@ -15,7 +15,7 @@ const AVAILABLE_GAMES = [
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
-  folder: Phaser.GameObjects.Rectangle;
+  folder: Phaser.GameObjects.Sprite;
   folderOverlap: boolean = false;
   games: string[] = [...AVAILABLE_GAMES];
   lives: number = 3;
@@ -34,7 +34,10 @@ export class Game extends Scene {
 
   start() {
     this.add.image(0, 0, "desk").setOrigin(0);
-    this.folder = this.add.rectangle(1920, 780, 520, 740, 0xff0000, 0.5);
+    this.folder = this.add
+      .sprite(1920, 780, "folders")
+      .setFlipX(true)
+      .setOrigin(0.5);
     new Paper({ scene: this, x: 640, y: 162 })
       .setActive(false)
       .setRotation(0.01)
@@ -77,11 +80,11 @@ export class Game extends Scene {
 
     this.folder.on("overlapstart", () => {
       this.paper.setScale(0.75);
-      this.folder.setFillStyle(0x00ff00, 0.5);
+      this.folder.setFrame(1);
     });
     this.folder.on("overlapend", () => {
       this.paper.setScale(1);
-      this.folder.setFillStyle(0xff0000, 0.5);
+      this.folder.setFrame(2);
     });
 
     this.onWin(true);
@@ -100,7 +103,7 @@ export class Game extends Scene {
   startGame = () => {
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex];
-    this.paperSceneName = AVAILABLE_GAMES[4];
+    this.paperSceneName = AVAILABLE_GAMES[2];
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.games.push(...AVAILABLE_GAMES);
@@ -119,7 +122,7 @@ export class Game extends Scene {
       this.lives--;
       // @ts-expect-error
       this.livesView.setLives(this.lives);
-      this.onWin();
+      this.startGame();
     } else {
       this.lives = 3;
       this.scene.start("GameOver");
