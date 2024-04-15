@@ -41,7 +41,7 @@ export default class Invaders extends PaperBaseScene {
       (bullet, enemy) => {
         enemy.destroy();
         bullet.destroy();
-      }
+      },
     );
 
     this.player = this.physics.add
@@ -65,7 +65,7 @@ export default class Invaders extends PaperBaseScene {
     }
 
     this.physics.add.collider(this.player, this.enemyGroup, () =>
-      super.onGameOver()
+      super.onGameOver(),
     );
   }
 

@@ -49,6 +49,7 @@ export class Credits extends Scene {
       fontSize: 60,
       text: "Main Menu",
       onPointerDown: () => {
+        this.sound.stopAll();
         this.scene.start("MainMenu");
       },
     });

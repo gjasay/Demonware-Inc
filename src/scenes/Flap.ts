@@ -8,17 +8,38 @@ export default class Flap extends PaperBaseScene {
   private pipeTimeIntervalMax: number = 2250;
   private pipeYMin = -100;
   private pipeYMax = 200;
-  private winTime = 30000;
+  private winTime = 15000;
+  private timeText: Phaser.GameObjects.Text;
+  private seconds: number = 0;
+
   constructor() {
     super("Flap");
   }
   create(data: any) {
     super.create(data);
+    this.seconds = 14;
+    this.timeText = this.add.text(0, 0, "Survive for: 15s", {
+      color: "#ff0000",
+      fontSize: 30,
+    });
+
+    this.time.addEvent({
+      delay: 1000,
+
+      callback: () => {
+        if (this.cat.active) {
+          this.timeText.setText(`Survive for: ${this.seconds}s`);
+          this.seconds--;
+        }
+      },
+      loop: true,
+    });
 
     this.pipes = this.physics.add.group({ velocityX: -150 });
 
     this.cat = this.physics.add
       .sprite(150, 150, "cat-step")
+      .setCircle(64)
       .play("cat-flap")
       .setScale(0.65)
       .setGravityY(250)

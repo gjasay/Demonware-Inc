@@ -1,5 +1,6 @@
 import { PaperBaseScene } from "./PaperBaseScene";
 
+const PADDLE_SOUNDS = ["paddle1", "paddle2", "paddle3"];
 const BREAK_SOUNDS = ["break1", "break2", "break3", "break4"];
 
 export default class Breakout extends PaperBaseScene {
@@ -42,10 +43,16 @@ export default class Breakout extends PaperBaseScene {
       setOrigin: { x: 0, y: 0 },
     });
 
-    this.physics.add.collider(this.ball, this.paddle);
+    this.physics.add.collider(this.ball, this.paddle, () => {
+      this.sound.play(
+        PADDLE_SOUNDS[Math.floor(Math.random() * PADDLE_SOUNDS.length)]
+      );
+    });
     this.physics.add.collider(this.ball, this.enemyGroup, (_ball, enemy) => {
       enemy.destroy();
-      this.sound.play(BREAK_SOUNDS[Math.floor(Math.random() * BREAK_SOUNDS.length)]);
+      this.sound.play(
+        BREAK_SOUNDS[Math.floor(Math.random() * BREAK_SOUNDS.length)]
+      );
     });
 
     this.ball.setVelocity(200, 500);

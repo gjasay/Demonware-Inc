@@ -13,10 +13,11 @@ export class Runner extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
-    this.seconds = 60;
     this.blocks = this.physics.add.group();
     this.add.line(0, 0, 180, 740, 830, 740, 0xff0000);
-    this.timeText = this.add.text(0, 0, "Stay alive for: 30s", {
+
+    this.seconds = 14;
+    this.timeText = this.add.text(0, 0, "Survive for: 15s", {
       color: "#ff0000",
       fontSize: 30,
     });
@@ -39,23 +40,23 @@ export class Runner extends PaperBaseScene {
     });
 
     this.time.addEvent({
-      delay: 1000,
-
-      callback: () => {
-        if (this.cat.active) {
-          this.timeText.setText(`Stay alive for: ${this.seconds}s`);
-          this.seconds--;
-        }
-      },
-      loop: true,
-    });
-
-    this.time.addEvent({
-      delay: 30000,
+      delay: 15000,
       callback: () => {
         if (this.cat.active) super.onWin();
         else super.onGameOver();
       },
+    });
+
+    this.time.addEvent({
+      delay: 1000,
+
+      callback: () => {
+        if (this.cat.active) {
+          this.timeText.setText(`Survive for: ${this.seconds}s`);
+          this.seconds--;
+        }
+      },
+      loop: true,
     });
 
     this.createBlock();

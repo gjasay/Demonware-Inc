@@ -60,6 +60,7 @@ export class Preloader extends Scene {
     });
 
     this.load.audio("delicate", "music/Delicate.mp3");
+    this.load.audio("middayslump", "music/MidDaySlump.mp3");
     this.load.audio("thisjobsucks", "music/ThisJobSucks.mp3");
     this.load.audio("demonware", "music/Demonware.mp3");
     this.load.audio("ambience", "sounds/ambience.mp3");
@@ -71,10 +72,13 @@ export class Preloader extends Scene {
     this.load.audio("gameover3", "sounds/GameOver3.mp3");
     this.load.audio("gameover4", "sounds/GameOver4.mp3");
     this.load.audio("gameover5", "sounds/GameOver5.mp3");
-    this.load.audio("break1", "sounds/break1.wav");
-    this.load.audio("break2", "sounds/break2.wav");
-    this.load.audio("break3", "sounds/break3.wav");
-    this.load.audio("break4", "sounds/break4.wav");
+    this.load.audio("break1", "sounds/break1.mp3");
+    this.load.audio("break2", "sounds/break2.mp3");
+    this.load.audio("break3", "sounds/break3.mp3");
+    this.load.audio("break4", "sounds/break4.mp3");
+    this.load.audio("paddle1", "sounds/Paddle1.mp3");
+    this.load.audio("paddle2", "sounds/Paddle2.mp3");
+    this.load.audio("paddle3", "sounds/Paddle3.mp3");
     this.load.audio("flap1", "sounds/Flap1.mp3");
     this.load.audio("flap2", "sounds/Flap2.mp3");
     this.load.audio("flap3", "sounds/Flap3.mp3");

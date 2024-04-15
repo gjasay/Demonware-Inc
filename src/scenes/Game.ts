@@ -3,10 +3,10 @@ import { Paper as Paper } from "../objects/Paper";
 import Button from "../objects/Button";
 import Lives from "../objects/Lives";
 
-const MUSIC = ["thisjobsucks", "delicate", "delicate"];
+const MUSIC = ["thisjobsucks", "middayslump", "delicate"];
 const AVAILABLE_GAMES = [
   "Breakout",
-  "DrawPentagram",
+  // "DrawPentagram",
   "Flap",
   "Invaders",
   "Runner",
@@ -19,9 +19,13 @@ export class Game extends Scene {
   folderOverlap: boolean = false;
   games: string[] = [...AVAILABLE_GAMES];
   lives: number = 3;
-  livesView: Phaser.GameObjects.Image;
+  livesView: Lives;
   paper: Paper;
   paperSceneName: string;
+  timerEvent: Phaser.Time.TimerEvent;
+  timerSeconds: number = 0;
+  timerText: Phaser.GameObjects.Text;
+  timerTickEvent: Phaser.Time.TimerEvent;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
@@ -74,6 +78,13 @@ export class Game extends Scene {
       },
     });
 
+    this.timerText = this.add
+      .text(50, 1000, "00s", {
+        fontSize: 32,
+        color: "#ff0000",
+      })
+      .setOrigin(0);
+
     this.livesView = new Lives(this);
 
     this.sound.play("ambience", { loop: true, volume: 0.2 });
@@ -91,7 +102,6 @@ export class Game extends Scene {
   }
 
   onWin = (firstPlay?: boolean) => {
-    this.playMusic();
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
     if (firstPlay) {
       this.startGame();
@@ -101,9 +111,11 @@ export class Game extends Scene {
   };
 
   startGame = () => {
+    this.startTimer();
+    this.playMusic();
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex];
-    this.paperSceneName = AVAILABLE_GAMES[2];
+    this.paperSceneName = AVAILABLE_GAMES[1];
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.games.push(...AVAILABLE_GAMES);
@@ -120,7 +132,6 @@ export class Game extends Scene {
     this.sound.play(`loselife${4 - this.lives}`);
     if (this.lives > 1) {
       this.lives--;
-      // @ts-expect-error
       this.livesView.setLives(this.lives);
       this.startGame();
     } else {
@@ -128,6 +139,26 @@ export class Game extends Scene {
       this.scene.start("GameOver");
     }
   };
+
+  startTimer() {
+    this.timerSeconds = 59;
+    this.timerEvent?.remove();
+    this.timerTickEvent?.remove();
+
+    this.timerTickEvent = this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.timerText.setText(`${this.timerSeconds}s`);
+        this.timerSeconds--;
+      },
+      repeat: this.timerSeconds,
+    });
+
+    this.timerEvent = this.time.addEvent({
+      delay: this.timerSeconds * 1000,
+      callback: this.onGameOver,
+    });
+  }
 
   playMusic() {
     MUSIC.forEach((key) => this.sound.stopByKey(key));

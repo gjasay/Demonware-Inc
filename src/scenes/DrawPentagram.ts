@@ -18,7 +18,6 @@ export default class DrawPentagram extends PaperBaseScene {
     graphics.lineTo(86, 280);
     graphics.lineTo(374, 480);
 
-    
     graphics.closePath();
     graphics.strokePath();
 
