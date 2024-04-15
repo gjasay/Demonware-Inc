@@ -3,7 +3,9 @@ import { PaperBaseScene } from "./PaperBaseScene";
 export class Runner extends PaperBaseScene {
   cat: Phaser.Physics.Arcade.Sprite;
   damned: Phaser.Physics.Arcade.Group;
+  damnedVelocity: number = 0;
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
+  spawnSpeed: number = 0;
 
   constructor() {
     super("Runner");
@@ -11,8 +13,22 @@ export class Runner extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
+    switch (this.difficulty) {
+      case 2:
+        this.spawnSpeed = 500;
+        this.damnedVelocity = -250;
+        break;
+      case 3:
+        this.spawnSpeed = 350;
+        this.damnedVelocity = -350;
+        break;
+      default:
+        this.spawnSpeed = 1000;
+        this.damnedVelocity = -200;
+        break;
+    }
     super.startTimer(15, true);
-    this.damned = this.physics.add.group({ velocityX: -200 });
+    this.damned = this.physics.add.group({ velocityX: this.damnedVelocity });
     this.add.line(0, 0, 180, 740, 830, 740, 0xff0000);
 
     this.cat = this.physics.add
@@ -43,7 +59,7 @@ export class Runner extends PaperBaseScene {
       .play("damned-walk");
     this.damned.add(damned);
     this.time.addEvent({
-      delay: 1000 + Math.random() * 1500,
+      delay: this.spawnSpeed + Math.random() * this.spawnSpeed + 500,
       callback: this.createDamned,
     });
   };

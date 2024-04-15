@@ -3,6 +3,7 @@ import { PaperBaseScene } from "./PaperBaseScene";
 export default class Invaders extends PaperBaseScene {
   player: Phaser.Physics.Arcade.Sprite;
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
+  enemyVelocity: number = 65;
   enemyGroup: Phaser.Physics.Arcade.Group;
   bulletGroup: Phaser.Physics.Arcade.Group;
   constructor() {
@@ -12,13 +13,26 @@ export default class Invaders extends PaperBaseScene {
   create(data: any) {
     super.create(data);
     super.startTimer();
+
+    switch (this.difficulty) {
+      case 2:
+        this.enemyVelocity = 90;
+        break;
+      case 3:
+        this.enemyVelocity = 110;
+        break;
+      default:
+        this.enemyVelocity = 70;
+        break;
+    }
+
     this.physics.world.setBoundsCollision(true, true, true, false);
 
     this.enemyGroup = this.physics.add.group({
       key: "invader",
       collideWorldBounds: true,
       frameQuantity: 24,
-      velocityY: 65,
+      velocityY: this.enemyVelocity,
       gridAlign: {
         width: 8,
         height: 3,

@@ -71,15 +71,6 @@ export class Game extends Scene {
       .setActive(false)
       .setRotation(-0.02)
       .setTint(0xeeeeee);
-    this.paper = new Paper({
-      scene: this,
-      x: 930,
-      y: 550,
-      onComplete: this.startGame,
-    })
-      .setOrigin(0.5)
-      .setActive(false);
-
     this.beatTheClockText = this.add
       .text(1400, 840, "Beat the clock", {
         fontSize: 24,
@@ -122,6 +113,15 @@ export class Game extends Scene {
 
     this.livesView = new Lives(this);
 
+    this.paper = new Paper({
+      scene: this,
+      x: 930,
+      y: 550,
+      onComplete: this.startGame,
+    })
+      .setOrigin(0.5)
+      .setActive(false);
+
     this.sound.play("ambience", { loop: true, volume: 0.2 });
 
     this.folder.on("overlapstart", () => {
@@ -153,6 +153,7 @@ export class Game extends Scene {
     this.playMusic();
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
+    this.paperSceneName = "Runner";
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.difficulty++;
