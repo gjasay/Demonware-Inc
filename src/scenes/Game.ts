@@ -134,12 +134,17 @@ export class Game extends Scene {
     });
 
     this.onWin(true);
+
+    this.input.once("pointerdown", () => {
+      this.paper.setFrame(0);
+      this.startGame();
+    });
   }
 
   onWin = (firstPlay?: boolean) => {
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
     if (firstPlay) {
-      this.startGame();
+      this.paper.setFrame(2);
     } else {
       this.timerTickEvent?.remove();
       this.timerEvent?.remove();
@@ -153,7 +158,6 @@ export class Game extends Scene {
     this.playMusic();
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
-    this.paperSceneName = "Runner";
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.difficulty++;
