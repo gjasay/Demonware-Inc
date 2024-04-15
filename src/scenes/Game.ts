@@ -21,7 +21,6 @@ export class Game extends Scene {
   lives: number = 3;
   livesView: Lives;
   paper: Paper;
-  paperContainer: Phaser.GameObjects.Container;
   winText: Phaser.GameObjects.Text;
   paperSceneName: string;
   beatTheClockText: Phaser.GameObjects.Text;
@@ -30,6 +29,8 @@ export class Game extends Scene {
   timerSeconds: number = 0;
   timerText: Phaser.GameObjects.Text;
   timerTickEvent: Phaser.Time.TimerEvent;
+  score: number = 0;
+  scoreText: Phaser.GameObjects.Text;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
@@ -119,6 +120,13 @@ export class Game extends Scene {
       })
       .setOrigin(0);
 
+    this.scoreText = this.add
+      .text(0, 40, `Demons Summoned: ${this.score}`, {
+        fontSize: 40,
+        color: "#ff0000",
+      })
+      .setOrigin(0);
+
     this.livesView = new Lives(this);
 
     this.sound.play("ambience", { loop: true, volume: 0.2 });
@@ -141,6 +149,8 @@ export class Game extends Scene {
       this.startGame();
     } else {
       this.paper.setActive(true);
+      this.score++;
+      this.scoreText.setText(`Demons Summoned: ${this.score}`);
     }
   };
 
@@ -170,6 +180,7 @@ export class Game extends Scene {
     } else {
       this.lives = 3;
       this.scene.start("GameOver");
+      this.score = 0;
     }
   };
 
