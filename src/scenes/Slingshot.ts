@@ -1,15 +1,14 @@
-import SlingshotEnemy from "../objects/SlingshotEnemy";
 import { PaperBaseScene } from "./PaperBaseScene";
 
 export class Slingshot extends PaperBaseScene {
   isPullingBack: boolean = false;
-  isShooting: boolean = false;
   velocity: number = 0;
   maxVelocity: number = -500;
   milisecondsToSubtractVelocity: number = 1;
   projectileYOffset: number = 10;
   projectile: Phaser.Physics.Arcade.Sprite;
   projectileGroup: Phaser.Physics.Arcade.Group;
+  projectileCount: number;
   targetGroup: Phaser.Physics.Arcade.Group;
   currentProjectile: Phaser.Physics.Arcade.Sprite;
   slingshot: Phaser.Physics.Arcade.Sprite;
@@ -20,7 +19,18 @@ export class Slingshot extends PaperBaseScene {
   create(data: any) {
     super.create(data);
     this.physics.world.setBoundsCollision(true, true, false, true);
+    this.velocity = 0;
+    this.projectileCount = 10;
 
+    this.projectileGroup = this.physics.add.group({
+      key: "projectile",
+      frameQuantity: 0,
+      maxSize: 10,
+      collideWorldBounds: true,
+      bounceX: 1,
+      setScale: { x: 0.5, y: 0.5 },
+      active: true,
+    });
     this.targetGroup = this.physics.add.group({bounceX: 1, collideWorldBounds: true});
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -35,26 +45,18 @@ export class Slingshot extends PaperBaseScene {
     .setImmovable(true)
     .setCollideWorldBounds(true);
 
-    this.projectileGroup = this.physics.add.group({
-      key: "projectile",
-      frameQuantity: 0,
-      maxSize: 10,
-      collideWorldBounds: true,
-      bounceX: 1,
-      setScale: { x: 0.5, y: 0.5 },
-    });
-
     if (this.input.keyboard) {
       //Spacebar input for shooting
       this.input.keyboard.on("keydown-SPACE", (e: KeyboardEvent) => {
-        if (!e.repeat) {
+        if (!e.repeat && !this.isPullingBack) {
+          console.log("Created new projectile")
           this.isPullingBack = true;
           const newProjectile = this.projectileGroup.createFromConfig({
             key: "projectile",
             setXY: { x: this.slingshot.x, y: this.slingshot.y - this.projectileYOffset },
           });
           this.currentProjectile = newProjectile[0];
-
+          if (this.currentProjectile != null) this.currentProjectile.setScale(0.5);
         } 
           
       });
@@ -78,7 +80,10 @@ export class Slingshot extends PaperBaseScene {
     }
     
     this.physics.add.collider(this.projectileGroup, this.targetGroup, (projectile, target) => {
-      projectile.destroy();
+      if (projectile instanceof Phaser.Physics.Arcade.Sprite) {
+        projectile.setActive(false);
+        projectile.setPosition(-100, -100);
+      }
       target.destroy();
     });
 
@@ -91,12 +96,29 @@ export class Slingshot extends PaperBaseScene {
         this.velocity = this.velocity - 1 * delta / this.milisecondsToSubtractVelocity;
       }
     }
+    if (this.targetGroup.countActive() === 0) {
+      super.onWin();
+    } else if (this.projectileGroup.countActive() <= 0 && this.projectileCount <= 0) {
+      console.log("Game Over");
+      super.onGameOver();
+    }
     this.positionSlingshot();
+
+    this.projectileGroup.getChildren().forEach((projectile) => {
+      if (projectile instanceof Phaser.Physics.Arcade.Sprite) {
+        if (projectile.y < 0) {
+          projectile.setActive(false);
+        }
+      }
+    });
   }
   
   shoot() {
     if (this.currentProjectile != null) this.currentProjectile.setVelocityY(this.velocity);
-    this.isShooting = true;
+    if (this.projectileCount > 0) {
+      this.projectileCount--;
+    }
+    console.log(this.projectileCount, this.projectileGroup.countActive());
   }
 
   positionSlingshot() {

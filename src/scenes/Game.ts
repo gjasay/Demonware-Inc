@@ -9,7 +9,6 @@ const AVAILABLE_GAMES = [
   "Flap",
   "Breakout",
   "Slingshot",
-  "DrawPentagram",
   "Runner",
 ];
 
