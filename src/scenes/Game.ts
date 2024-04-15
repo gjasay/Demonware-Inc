@@ -6,7 +6,6 @@ import Lives from "../objects/Lives";
 const MUSIC = ["thisjobsucks", "delicate", "delicate"];
 const AVAILABLE_GAMES = [
   "Breakout",
-  "DrawPentagram",
   "Flap",
   "Invaders",
   "Runner",
