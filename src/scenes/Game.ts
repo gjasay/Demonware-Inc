@@ -6,6 +6,7 @@ import Lives from "../objects/Lives";
 const MUSIC = ["thisjobsucks", "delicate", "delicate"];
 const AVAILABLE_GAMES = [
   "Breakout",
+  "DrawPentagram",
   "Flap",
   "Invaders",
   "Runner",
@@ -18,7 +19,7 @@ export class Game extends Scene {
   folderOverlap: boolean = false;
   games: string[] = [...AVAILABLE_GAMES];
   lives: number = 3;
-  livesView: Phaser.GameObjects.Group;
+  livesView: Phaser.GameObjects.Image;
   paper: Paper;
   paperSceneName: string;
 
@@ -99,7 +100,7 @@ export class Game extends Scene {
   startGame = () => {
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex];
-    // this.paperSceneName = AVAILABLE_GAMES[4];
+    this.paperSceneName = AVAILABLE_GAMES[4];
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.games.push(...AVAILABLE_GAMES);

@@ -16,6 +16,7 @@ export class Credits extends Scene {
   }
 
   create() {
+    this.sound.play("demonware", { loop: true, volume: 0.5 });
     this.add.image(0, 0, "title-bg").setOrigin(0);
 
     this.add
