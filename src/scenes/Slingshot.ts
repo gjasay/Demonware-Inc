@@ -106,7 +106,7 @@ export class Slingshot extends PaperBaseScene {
             target.destroy();
           });
         }
-      },
+      }
     );
   }
 
@@ -117,16 +117,18 @@ export class Slingshot extends PaperBaseScene {
           this.velocity - (1 * delta) / this.milisecondsToSubtractVelocity;
       }
     }
+
+    this.positionSlingshot();
+
     if (this.targetGroup.countActive() === 0) {
       super.onWin();
     } else if (
-      this.projectileGroup.countActive() <= 0 &&
-      this.projectileCount <= 0
+      this.projectileCount === 0 &&
+      this.projectileGroup.countActive() === 0 &&
+      this.targetGroup.countActive() > 0
     ) {
-      console.log("Game Over");
       super.onGameOver();
     }
-    this.positionSlingshot();
 
     this.projectileGroup.getChildren().forEach((projectile) => {
       if (projectile instanceof Phaser.Physics.Arcade.Sprite) {
@@ -144,14 +146,13 @@ export class Slingshot extends PaperBaseScene {
       this.projectileCount--;
       this.ammoText.setText(`Ammo: ${this.projectileCount}`);
     }
-    console.log(this.projectileCount, this.projectileGroup.countActive());
   }
 
   positionSlingshot() {
     if (this.isPullingBack && this.currentProjectile != null) {
       this.currentProjectile.setPosition(
         this.slingshot.x,
-        this.slingshot.y - this.projectileYOffset,
+        this.slingshot.y - this.projectileYOffset
       );
     }
 
