@@ -22,6 +22,8 @@ export class Game extends Scene {
   livesView: Lives;
   paper: Paper;
   paperSceneName: string;
+  beatTheClockText: Phaser.GameObjects.Text;
+  surviveText: Phaser.GameObjects.Text;
   timerEvent: Phaser.Time.TimerEvent;
   timerSeconds: number = 0;
   timerText: Phaser.GameObjects.Text;
@@ -78,8 +80,24 @@ export class Game extends Scene {
       },
     });
 
+    this.beatTheClockText = this.add
+      .text(20, 950, "Beat the clock", {
+        fontSize: 24,
+        color: "#000000",
+      })
+      .setOrigin(0)
+      .setVisible(false);
+
+    this.surviveText = this.add
+      .text(25, 950, "Survive for", {
+        fontSize: 24,
+        color: "#000000",
+      })
+      .setOrigin(0)
+      .setVisible(false);
+
     this.timerText = this.add
-      .text(50, 1000, "00s", {
+      .text(120, 1000, "00s", {
         fontSize: 32,
         color: "#ff0000",
       })
@@ -143,6 +161,14 @@ export class Game extends Scene {
     this.timerSeconds = timerSeconds;
     this.timerEvent?.remove();
     this.timerTickEvent?.remove();
+
+    if (win) {
+      this.surviveText.setVisible(true);
+      this.beatTheClockText.setVisible(false);
+    } else {
+      this.surviveText.setVisible(false);
+      this.beatTheClockText.setVisible(true);
+    }
 
     this.timerTickEvent = this.time.addEvent({
       delay: 1000,
