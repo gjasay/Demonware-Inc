@@ -116,7 +116,7 @@ export class Preloader extends Scene {
       frames: this.anims.generateFrameNumbers("filespritesheet", {
         frames: [1, 0],
       }),
-      frameRate: 5,
+      frameRate: 8,
       repeat: 0,
     });
 

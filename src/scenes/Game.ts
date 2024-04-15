@@ -21,6 +21,8 @@ export class Game extends Scene {
   lives: number = 3;
   livesView: Lives;
   paper: Paper;
+  paperContainer: Phaser.GameObjects.Container;
+  winText: Phaser.GameObjects.Text;
   paperSceneName: string;
   beatTheClockText: Phaser.GameObjects.Text;
   surviveText: Phaser.GameObjects.Text;
@@ -68,6 +70,14 @@ export class Game extends Scene {
     })
       .setOrigin(0.5)
       .setActive(false);
+
+    this.winText = this.add.text(0, 0, 
+    `   DEMON SUMMONED
+
+  FILE IN THE FOLDER
+
+    ON YOUR RIGHT`, 
+    {fontSize: 50, color: "#ff0000"}).setOrigin(0.5).setVisible(false);
 
     new Button({
       scene: this,
@@ -218,5 +228,20 @@ export class Game extends Scene {
 
   update() {
     this.checkFolderOverlap();
+
+    this.winText.setPosition(this.paper.x, this.paper.y);
+
+    if (this.paper.active) {
+      this.winText.setVisible(true);
+    } else {
+      this.winText.setVisible(false);
+    }
+
+    if (this.paper.dragging) {
+      this.winText.setScale(0.65);
+    } else {
+      this.winText.setScale(1);
+    }
+    
   }
 }

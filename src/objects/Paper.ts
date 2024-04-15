@@ -1,5 +1,6 @@
 export class Paper extends Phaser.Physics.Arcade.Sprite {
   overlap: boolean = false;
+  dragging: boolean = false;
   onComplete?: () => void;
   constructor({
     scene,
@@ -22,6 +23,7 @@ export class Paper extends Phaser.Physics.Arcade.Sprite {
 
     this.on("drag", (_pointer: any, x: number, y: number) => {
       if (!this.active) return;
+      this.dragging = true;
       this.setPosition(x, y);
       this.setScale(0.75);
     });
@@ -30,6 +32,7 @@ export class Paper extends Phaser.Physics.Arcade.Sprite {
       if (!this.active) return;
       if (this.overlap) this._onComplete();
       this.setScale(1);
+      this.dragging = false;
     });
 
     this.on("overlapstart", () => {
