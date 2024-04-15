@@ -1,16 +1,13 @@
 import { Scene } from "phaser";
 import Button from "../objects/Button";
+import { LeaderBoardInput } from "../objects/LeaderBoardInput";
 
 export class GameOver extends Scene {
-  camera: Phaser.Cameras.Scene2D.Camera;
-  background: Phaser.GameObjects.Image;
-  gameover_text: Phaser.GameObjects.Text;
-
   constructor() {
     super("GameOver");
   }
 
-  create() {
+  create(data: { score: number }) {
     this.add.image(0, 0, "title-bg").setOrigin(0);
     this.add.image(960, 500, "gameover").setScale(0.7);
     this.sound.play("loselife3");
@@ -18,6 +15,42 @@ export class GameOver extends Scene {
       delay: 3000,
       callback: () => {
         this.sound.play(`gameover${1 + Math.floor(Math.random() * 5)}`);
+      },
+    });
+
+    const leaderboardButton = new Button({
+      scene: this,
+      x: 960,
+      y: 200,
+      fontSize: 32,
+      text: "LeaderBoard",
+      onPointerDown: () => {
+        this.sound.stopAll();
+        this.scene.start("LeaderBoard");
+      },
+    })
+      .setActive(false)
+      .setVisible(false);
+
+    new LeaderBoardInput({
+      scene: this,
+      x: 960,
+      y: 200,
+      onDone: (name) => {
+        const currentLeaders: Array<any> = JSON.parse(
+          localStorage.getItem("leaderboard") || "[]"
+        );
+
+        const isBetter = currentLeaders.some(
+          (leader) => leader.score < data.score
+        );
+
+        if (isBetter && currentLeaders.length > 10) currentLeaders.pop();
+
+        currentLeaders.push({ name, score: data.score });
+        currentLeaders.sort((a, b) => b.score - a.score);
+        localStorage.setItem("leaderboard", JSON.stringify(currentLeaders));
+        leaderboardButton.setActive(true).setVisible(true);
       },
     });
 

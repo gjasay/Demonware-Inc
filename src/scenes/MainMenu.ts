@@ -39,7 +39,7 @@ export class MainMenu extends Scene {
     this.tweens.add({
       targets: this.cameras.main,
       alpha: 1,
-      duration: 3000,
+      duration: 5000,
       onComplete: () => {
         startGame.setActive(true);
       },

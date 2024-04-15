@@ -138,11 +138,11 @@ export class Game extends Scene {
   onWin = (firstPlay?: boolean) => {
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
     if (firstPlay) {
-      this.paper.setFrame(2);
+      this.paper.setFrame(7);
     } else {
       this.timerTickEvent?.remove();
       this.timerEvent?.remove();
-      this.paper.setActive(true).setFrame(1);
+      this.paper.setActive(true).setFrame(1 + Math.floor(Math.random() * 6));
       this.score++;
       this.scoreText.setText(scoreFormatter.format(this.score));
     }
@@ -154,11 +154,6 @@ export class Game extends Scene {
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
     this.games.splice(randomIndex, 1);
-    if (this.games.length === 0) {
-      this.difficulty++;
-      console.log("Difficulty:", this.difficulty);
-      this.games.push(...AVAILABLE_GAMES);
-    }
     console.log("Launch:", this.paperSceneName);
     this.scene.launch(this.paperSceneName, {
       difficulty: this.difficulty,
@@ -166,6 +161,11 @@ export class Game extends Scene {
       onGameOver: this.onGameOver,
       startTimer: this.startTimer,
     });
+    if (this.games.length === 0) {
+      this.difficulty++;
+      console.log("Difficulty:", this.difficulty);
+      this.games.push(...AVAILABLE_GAMES);
+    }
   };
 
   onGameOver = () => {
@@ -177,7 +177,7 @@ export class Game extends Scene {
       this.startGame();
     } else {
       this.lives = 3;
-      this.scene.start("GameOver");
+      this.scene.start("GameOver", { score: this.score });
       this.score = 0;
     }
   };
