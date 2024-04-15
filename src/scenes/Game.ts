@@ -21,7 +21,6 @@ export class Game extends Scene {
   lives: number = 3;
   livesView: Lives;
   paper: Paper;
-  winText: Phaser.GameObjects.Text;
   paperSceneName: string;
   beatTheClockText: Phaser.GameObjects.Text;
   surviveText: Phaser.GameObjects.Text;
@@ -73,31 +72,6 @@ export class Game extends Scene {
       .setOrigin(0.5)
       .setActive(false);
 
-    this.winText = this.add
-      .text(
-        0,
-        0,
-        `   DEMON SUMMONED
-
- FILE IN THE FOLDER
-
-    ON YOUR RIGHT`,
-        { fontSize: 48, color: "#ff0000" }
-      )
-      .setOrigin(0.5)
-      .setVisible(false);
-
-    new Button({
-      scene: this,
-      x: 100,
-      y: 20,
-      text: "Game Over",
-      onPointerDown: () => {
-        this.lives = 1;
-        this.onGameOver();
-      },
-    });
-
     this.beatTheClockText = this.add
       .text(20, 950, "Beat the clock", {
         fontSize: 24,
@@ -122,9 +96,11 @@ export class Game extends Scene {
       .setOrigin(0);
 
     this.scoreText = this.add
-      .text(0, 40, `Demons Summoned: ${this.score}`, {
+      .text(0, 0, `Demons Summoned: ${this.score}`, {
         fontSize: 40,
         color: "#ff0000",
+        stroke: "#000000",
+        strokeThickness: 4,
       })
       .setOrigin(0);
 
@@ -149,7 +125,9 @@ export class Game extends Scene {
     if (firstPlay) {
       this.startGame();
     } else {
-      this.paper.setActive(true);
+      this.timerTickEvent?.remove();
+      this.timerEvent?.remove();
+      this.paper.setActive(true).setFrame(1);
       this.score++;
       this.scoreText.setText(`Demons Summoned: ${this.score}`);
     }
@@ -248,19 +226,5 @@ export class Game extends Scene {
 
   update() {
     this.checkFolderOverlap();
-
-    this.winText.setPosition(this.paper.x, this.paper.y);
-
-    if (this.paper.active) {
-      this.winText.setVisible(true);
-    } else {
-      this.winText.setVisible(false);
-    }
-
-    if (this.paper.dragging) {
-      this.winText.setScale(0.65);
-    } else {
-      this.winText.setScale(1);
-    }
   }
 }

@@ -24,7 +24,6 @@ export class Preloader extends Scene {
     //  Load the assets for the game - Replace with your own assets
     this.load.setPath("assets");
     this.load.image("desk", "desk.png");
-    this.load.image("paper", "paper.png");
     this.load.image("title-bg", "title-bg.png");
     this.load.image("title", "demonware.png");
     this.load.image("pentagram-black", "pentagram-black.png");
@@ -38,6 +37,10 @@ export class Preloader extends Scene {
     this.load.image("goatopen", "goatopen.png");
     this.load.image("brick", "brick.png");
     this.load.image("slingshot", "slingshot.png");
+    this.load.spritesheet("paper", "paper.png", {
+      frameWidth: 584,
+      frameHeight: 783,
+    });
     this.load.spritesheet("folders", "folders.png", {
       frameWidth: 630,
       frameHeight: 820,

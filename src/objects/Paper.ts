@@ -45,14 +45,7 @@ export class Paper extends Phaser.Physics.Arcade.Sprite {
 
   _onComplete() {
     this.setPosition(930, 550);
-    this.setActive(false);
+    this.setActive(false).setFrame(0);
     this.onComplete?.();
-  }
-
-  showCompleteMessage() {
-    this.setTint(0x00ff00);
-    this.scene.time.delayedCall(2000, () => {
-      this.setTint(0xffffff);
-    });
   }
 }
