@@ -5,22 +5,13 @@ export default class Lives extends Phaser.GameObjects.Group {
     this.classType = Phaser.GameObjects.Image;
 
     this.add(
-      scene.add
-        .image(1856, 1016, "baphomet")
-        .setOrigin(0.5)
-        .setRotation(Math.PI)
+      scene.add.image(64, 1016, "baphomet").setOrigin(0.5).setRotation(Math.PI)
     );
     this.add(
-      scene.add
-        .image(1728, 1016, "baphomet")
-        .setOrigin(0.5)
-        .setRotation(Math.PI)
+      scene.add.image(192, 1016, "baphomet").setOrigin(0.5).setRotation(Math.PI)
     );
     this.add(
-      scene.add
-        .image(1600, 1016, "baphomet")
-        .setOrigin(0.5)
-        .setRotation(Math.PI)
+      scene.add.image(320, 1016, "baphomet").setOrigin(0.5).setRotation(Math.PI)
     );
   }
 

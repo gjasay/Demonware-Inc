@@ -1,40 +1,65 @@
 import { Scene } from "phaser";
-import { PaperObject } from "../objects/PaperObject";
+import { Paper as Paper } from "../objects/Paper";
 import Button from "../objects/Button";
 import Lives from "../objects/Lives";
 
 const MUSIC = ["thisjobsucks", "delicate", "delicate"];
 const AVAILABLE_GAMES = [
-  "Invaders",
-  "Flap",
   "Breakout",
-  "Slingshot",
   "DrawPentagram",
+  "Flap",
+  "Invaders",
   "Runner",
+  "Slingshot",
 ];
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
-  paperObj: PaperObject;
-  paperSceneName: string;
+  folder: Phaser.GameObjects.Rectangle;
+  folderOverlap: boolean = false;
+  games: string[] = [...AVAILABLE_GAMES];
   lives: number = 3;
   livesView: Phaser.GameObjects.Group;
-  games: string[] = [...AVAILABLE_GAMES];
+  paper: Paper;
+  paperSceneName: string;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
   }
 
   create() {
-    this.camera = this.cameras.main;
-
     this.start();
     this.events.once("shutdown", this.onShutdown, this);
   }
 
   start() {
     this.add.image(0, 0, "desk").setOrigin(0);
-    this.paperObj = new PaperObject(this, 640, 162);
+    this.folder = this.add.rectangle(1920, 780, 520, 740, 0xff0000, 0.5);
+    new Paper({ scene: this, x: 640, y: 162 })
+      .setActive(false)
+      .setRotation(0.01)
+      .setTint(0x999999);
+    new Paper({ scene: this, x: 640, y: 162 })
+      .setActive(false)
+      .setRotation(-0.01)
+      .setTint(0xaaaaaa);
+    new Paper({ scene: this, x: 640, y: 162 })
+      .setActive(false)
+      .setRotation(0.02)
+      .setTint(0xbbbbbb);
+    new Paper({ scene: this, x: 640, y: 162 })
+      .setActive(false)
+      .setRotation(-0.02)
+      .setTint(0xeeeeee);
+    this.paper = new Paper({
+      scene: this,
+      x: 930,
+      y: 550,
+      onComplete: this.startGame,
+    })
+      .setOrigin(0.5)
+      .setActive(false);
+
     new Button({
       scene: this,
       x: 100,
@@ -48,17 +73,34 @@ export class Game extends Scene {
 
     this.livesView = new Lives(this);
 
-    this.onWin();
+    this.sound.play("ambience", { loop: true, volume: 0.2 });
 
-    this.sound.play("ambience", { loop: true, volume: 0.1 });
+    this.folder.on("overlapstart", () => {
+      this.paper.setScale(0.75);
+      this.folder.setFillStyle(0x00ff00, 0.5);
+    });
+    this.folder.on("overlapend", () => {
+      this.paper.setScale(1);
+      this.folder.setFillStyle(0xff0000, 0.5);
+    });
+
+    this.onWin(true);
   }
 
-  onWin = () => {
+  onWin = (firstPlay?: boolean) => {
     this.playMusic();
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
+    if (firstPlay) {
+      this.startGame();
+    } else {
+      this.paper.setActive(true);
+    }
+  };
+
+  startGame = () => {
     const randomIndex = Math.floor(Math.random() * this.games.length);
-    // this.paperSceneName = this.games[5];
     this.paperSceneName = this.games[randomIndex];
+    // this.paperSceneName = AVAILABLE_GAMES[4];
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.games.push(...AVAILABLE_GAMES);
@@ -86,7 +128,7 @@ export class Game extends Scene {
 
   playMusic() {
     MUSIC.forEach((key) => this.sound.stopByKey(key));
-    this.sound.play(MUSIC[this.lives - 1]);
+    this.sound.play(MUSIC[this.lives - 1], { volume: 0.2, loop: true });
   }
 
   onShutdown() {
@@ -94,7 +136,28 @@ export class Game extends Scene {
     this.sound.stopAll();
   }
 
+  checkFolderOverlap() {
+    if (
+      Phaser.Geom.Rectangle.Overlaps(
+        this.paper.getBounds(),
+        this.folder.getBounds()
+      )
+    ) {
+      if (!this.folderOverlap) {
+        this.folderOverlap = true;
+        this.paper.emit("overlapstart");
+        this.folder.emit("overlapstart");
+      }
+    } else {
+      if (this.folderOverlap) {
+        this.folderOverlap = false;
+        this.paper.emit("overlapend");
+        this.folder.emit("overlapend");
+      }
+    }
+  }
+
   update() {
-    // this.paperObj.update();
+    this.checkFolderOverlap();
   }
 }

@@ -40,7 +40,7 @@ export class Runner extends PaperBaseScene {
 
     this.time.addEvent({
       delay: 1000,
-      startAt: 0,
+
       callback: () => {
         if (this.cat.active) {
           this.timeText.setText(`Stay alive for: ${this.seconds}s`);

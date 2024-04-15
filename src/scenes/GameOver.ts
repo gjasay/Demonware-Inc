@@ -14,6 +14,12 @@ export class GameOver extends Scene {
     this.add.image(0, 0, "title-bg").setOrigin(0);
     this.add.image(960, 500, "gameover").setScale(0.7);
     this.sound.play("loselife3");
+    this.time.addEvent({
+      delay: 3000,
+      callback: () => {
+        this.sound.play(`gameover${Math.floor(Math.random() * 3) + 1}`);
+      },
+    });
 
     new Button({
       scene: this,
