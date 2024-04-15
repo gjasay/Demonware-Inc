@@ -13,11 +13,12 @@ export class Runner extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
+    super.startTimer(15, true);
     this.blocks = this.physics.add.group();
     this.add.line(0, 0, 180, 740, 830, 740, 0xff0000);
 
     this.seconds = 14;
-    this.timeText = this.add.text(0, 0, "Survive for: 15s", {
+    this.timeText = this.add.text(50, 1000, "15s", {
       color: "#ff0000",
       fontSize: 30,
     });
@@ -52,7 +53,7 @@ export class Runner extends PaperBaseScene {
 
       callback: () => {
         if (this.cat.active) {
-          this.timeText.setText(`Survive for: ${this.seconds}s`);
+          this.timeText.setText(`${this.seconds}s`);
           this.seconds--;
         }
       },

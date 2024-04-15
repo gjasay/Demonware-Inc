@@ -21,6 +21,11 @@ export class PaperBaseScene extends Phaser.Scene {
     this.events.once("shutdown", this.shutdown, this);
   }
 
+  startTimer(seconds?: number, win?: boolean) {
+    // @ts-expect-error
+    this.data.startTimer(seconds, win);
+  }
+
   onWin() {
     // @ts-expect-error
     this.data.onWin();

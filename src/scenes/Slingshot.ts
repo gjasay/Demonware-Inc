@@ -19,6 +19,7 @@ export class Slingshot extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
+    super.startTimer();
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.velocity = 0;
     this.projectileCount = 10;
@@ -121,8 +122,10 @@ export class Slingshot extends PaperBaseScene {
     this.positionSlingshot();
 
     if (this.targetGroup.countActive() === 0) {
+      this.slingshot.setActive(false);
       super.onWin();
     } else if (
+      this.slingshot.active &&
       this.projectileCount === 0 &&
       this.projectileGroup.countActive() === 0 &&
       this.targetGroup.countActive() > 0

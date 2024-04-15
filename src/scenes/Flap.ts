@@ -15,10 +15,12 @@ export default class Flap extends PaperBaseScene {
   constructor() {
     super("Flap");
   }
+
   create(data: any) {
     super.create(data);
+    super.startTimer(15, true);
     this.seconds = 14;
-    this.timeText = this.add.text(0, 0, "Survive for: 15s", {
+    this.timeText = this.add.text(0, 0, "15s", {
       color: "#ff0000",
       fontSize: 30,
     });
@@ -28,7 +30,7 @@ export default class Flap extends PaperBaseScene {
 
       callback: () => {
         if (this.cat.active) {
-          this.timeText.setText(`Survive for: ${this.seconds}s`);
+          this.timeText.setText(`${this.seconds}s`);
           this.seconds--;
         }
       },

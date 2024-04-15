@@ -111,10 +111,10 @@ export class Game extends Scene {
   };
 
   startGame = () => {
-    this.startTimer();
     this.playMusic();
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex];
+    this.paperSceneName = "Runner";
     this.games.splice(randomIndex, 1);
     if (this.games.length === 0) {
       this.games.push(...AVAILABLE_GAMES);
@@ -123,6 +123,7 @@ export class Game extends Scene {
     this.scene.launch(this.paperSceneName, {
       onWin: this.onWin,
       onGameOver: this.onGameOver,
+      startTimer: this.startTimer,
     });
   };
 
@@ -139,8 +140,8 @@ export class Game extends Scene {
     }
   };
 
-  startTimer() {
-    this.timerSeconds = 59;
+  startTimer = (timerSeconds: number = 59, win: boolean = false) => {
+    this.timerSeconds = timerSeconds;
     this.timerEvent?.remove();
     this.timerTickEvent?.remove();
 
@@ -155,9 +156,9 @@ export class Game extends Scene {
 
     this.timerEvent = this.time.addEvent({
       delay: this.timerSeconds * 1000,
-      callback: this.onGameOver,
+      callback: win ? this.onWin : this.onGameOver,
     });
-  }
+  };
 
   playMusic() {
     MUSIC.forEach((key) => this.sound.stopByKey(key));

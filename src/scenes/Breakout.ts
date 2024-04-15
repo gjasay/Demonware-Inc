@@ -14,6 +14,7 @@ export default class Breakout extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
+    super.startTimer();
 
     this.ball = this.physics.add
       .sprite(400, 300, "projectile")
