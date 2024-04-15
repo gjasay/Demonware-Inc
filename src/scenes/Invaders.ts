@@ -63,6 +63,7 @@ export default class Invaders extends PaperBaseScene {
       .sprite(260, 690, "baphomet")
       .setScale(0.5)
       .setOrigin(0.5)
+      .setRotation(Math.PI)
       .setCollideWorldBounds(true);
 
     if (this.input.keyboard) {
