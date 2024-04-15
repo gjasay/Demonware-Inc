@@ -65,6 +65,10 @@ export class Preloader extends Scene {
     this.load.audio("gameover3", "sounds/GameOver3.mp3");
     this.load.audio("gameover4", "sounds/GameOver4.mp3");
     this.load.audio("gameoves5", "sounds/GameOver5.mp3");
+    this.load.audio("break1", "sounds/break1.wav");
+    this.load.audio("break2", "sounds/break2.wav");
+    this.load.audio("break3", "sounds/break3.wav");
+    this.load.audio("break4", "sounds/break4.wav");
   }
 
   create() {

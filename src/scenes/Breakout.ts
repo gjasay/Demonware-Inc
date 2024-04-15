@@ -1,5 +1,7 @@
 import { PaperBaseScene } from "./PaperBaseScene";
 
+const BREAK_SOUNDS = ["break1", "break2", "break3", "break4"];
+
 export default class Breakout extends PaperBaseScene {
   paddle: Phaser.Physics.Arcade.Sprite;
   keys: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -29,11 +31,11 @@ export default class Breakout extends PaperBaseScene {
       key: "brick",
       collideWorldBounds: true,
       immovable: true,
-      frameQuantity: 18,
+      frameQuantity: 12,
       gridAlign: {
         x: 0,
         width: 6,
-        height: 3,
+        height: 2,
         cellHeight: 40,
         cellWidth: 87,
       },
@@ -43,6 +45,7 @@ export default class Breakout extends PaperBaseScene {
     this.physics.add.collider(this.ball, this.paddle);
     this.physics.add.collider(this.ball, this.enemyGroup, (_ball, enemy) => {
       enemy.destroy();
+      this.sound.play(BREAK_SOUNDS[Math.floor(Math.random() * BREAK_SOUNDS.length)]);
     });
 
     this.ball.setVelocity(200, 500);
