@@ -22,7 +22,7 @@ export class Slingshot extends PaperBaseScene {
     super.startTimer();
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.velocity = 0;
-    this.projectileCount = 10;
+    this.projectileCount = 15;
     this.ammoText = this.add.text(0, 0, `Ammo: ${this.projectileCount}`, {
       color: "#ff0000",
       fontSize: 40,
@@ -31,7 +31,7 @@ export class Slingshot extends PaperBaseScene {
     this.projectileGroup = this.physics.add.group({
       key: "projectile",
       frameQuantity: 0,
-      maxSize: 10,
+      maxSize: this.projectileCount,
       collideWorldBounds: true,
       bounceX: 1,
       setScale: { x: 0.5, y: 0.5 },
