@@ -118,7 +118,10 @@ export class Game extends Scene {
       scene: this,
       x: 930,
       y: 550,
-      onComplete: this.startGame,
+      onComplete: () => {
+        this.playMusic();
+        this.startGame();
+      },
     }).setOrigin(0.5);
 
     this.sound.play("ambience", { loop: true, volume: 0.2 });
@@ -150,7 +153,6 @@ export class Game extends Scene {
 
   startGame = () => {
     this.paper.setActive(false).setFrame(0);
-    this.playMusic();
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
     this.games.splice(randomIndex, 1);
@@ -174,6 +176,7 @@ export class Game extends Scene {
     if (this.lives > 1) {
       this.lives--;
       this.livesView.setLives(this.lives);
+      this.playMusic();
       this.startGame();
     } else {
       this.lives = 3;
