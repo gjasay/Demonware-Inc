@@ -102,17 +102,7 @@ export class Slingshot extends PaperBaseScene {
         this.shoot();
         this.velocity = 0;
       });
-      //Arrow keys for aiming
-      this.input.keyboard.on("keydown-LEFT", (e: KeyboardEvent) => {
-        if (!e.repeat) {
-          this.slingshot.setVelocityX(-150);
-        }
-      });
-      this.input.keyboard.on("keydown-RIGHT", (e: KeyboardEvent) => {
-        if (!e.repeat) {
-          this.slingshot.setVelocityX(150);
-        }
-      });
+      
     }
 
     this.physics.add.collider(
@@ -139,6 +129,12 @@ export class Slingshot extends PaperBaseScene {
         this.velocity =
           this.velocity - (1 * delta) / this.milisecondsToSubtractVelocity;
       }
+    }
+    //Arrow keys for aiming
+    if (this.leftArrow.isDown || this.keyA.isDown) {
+      this.slingshot.setVelocityX(-150);
+    } else if (this.rightArrow.isDown || this.keyD.isDown) {
+      this.slingshot.setVelocityX(150);
     }
 
     this.positionSlingshot();

@@ -86,9 +86,9 @@ export default class Invaders extends PaperBaseScene {
   }
 
   update() {
-    if (this.keys.left.isDown) {
+    if (this.leftArrow.isDown || this.keyA.isDown) {
       this.player.setAccelerationX(-250);
-    } else if (this.keys.right.isDown) {
+    } else if (this.leftArrow.isDown || this.keyD.isDown) {
       this.player.setAccelerationX(250);
     } else {
       this.player.setAccelerationX(0);

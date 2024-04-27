@@ -5,7 +5,6 @@ const BREAK_SOUNDS = ["break1", "break2", "break3", "break4"];
 
 export default class Breakout extends PaperBaseScene {
   paddle: Phaser.Physics.Arcade.Sprite;
-  keys: Phaser.Types.Input.Keyboard.CursorKeys;
   enemyGroup: Phaser.Physics.Arcade.Group;
   ball: Phaser.Physics.Arcade.Sprite;
   velocityMultiplier: number;
@@ -28,6 +27,8 @@ export default class Breakout extends PaperBaseScene {
         this.velocityMultiplier = 1;
         break;
     }
+
+   
 
     this.ball = this.physics.add
       .sprite(400, 300, "projectile")
@@ -79,14 +80,17 @@ export default class Breakout extends PaperBaseScene {
     this.physics.world.setBoundsCollision(true, true, true, false);
 
     if (this.input.keyboard) {
-      this.keys = this.input.keyboard.createCursorKeys();
+      this.leftArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+      this.rightArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+      this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+      this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     }
   }
 
   update() {
-    if (this.keys.left.isDown) {
+    if (this.leftArrow.isDown || this.keyA.isDown) {
       this.paddle.setVelocityX(-250 * this.velocityMultiplier);
-    } else if (this.keys.right.isDown) {
+    } else if (this.rightArrow.isDown || this.keyD.isDown) {
       this.paddle.setVelocityX(250 * this.velocityMultiplier);
     } else {
       this.paddle.setVelocityX(0);

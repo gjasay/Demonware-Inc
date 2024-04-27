@@ -1,6 +1,11 @@
 export class PaperBaseScene extends Phaser.Scene {
   difficulty: number;
   gameOver: boolean = false;
+  //keys
+  leftArrow: Phaser.Input.Keyboard.Key;
+  rightArrow: Phaser.Input.Keyboard.Key;
+  keyA: Phaser.Input.Keyboard.Key;
+  keyD: Phaser.Input.Keyboard.Key;
   constructor(key: string) {
     super({
       key: key,
@@ -21,6 +26,13 @@ export class PaperBaseScene extends Phaser.Scene {
     // set bounds for physics to match camera
     this.physics.world.setBounds(0, 0, 520, 740);
     this.events.once("shutdown", this.shutdown, this);
+    //keyboard input
+    if (this.input.keyboard) {
+      this.leftArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+      this.rightArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+      this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+      this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    }
   }
 
   startTimer(seconds?: number, win?: boolean) {
