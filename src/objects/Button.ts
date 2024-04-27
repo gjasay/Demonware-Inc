@@ -20,10 +20,24 @@ export default class Button extends Phaser.GameObjects.Text {
       color: "#cc0000",
       align: "center",
     });
+
+    // Create a semi-transparent background
+    const background = scene.add.rectangle(this.x, this.y, this.width + 20, this.height + 20, 0xff0000)
+    
+    background.alpha = 0; // Adjust transparency here
+    scene.add.existing(background);
+    background.setOrigin(0.5, 0.5);
+
     this.setOrigin(0.5)
       .setInteractive()
-      .on("pointerover", () => this.setColor("#FF0000").setStroke("#ffa500", 2))
-      .on("pointerout", () => this.setColor("#990000").setStroke("#000", 0))
+      .on("pointerover", () => {
+        this.setColor("#000").setStroke("#ff000", 2)
+        background.alpha = 0.5;
+      })
+      .on("pointerout", () => {
+        this.setColor("#cc0000").setStroke("#000000", 0)
+        background.alpha = 0;
+      })
       .on("pointerdown", () => {
         if (this.active) onPointerDown();
       });

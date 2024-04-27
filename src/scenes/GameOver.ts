@@ -23,7 +23,8 @@ export class GameOver extends Scene {
       x: 960,
       y: 200,
       fontSize: 32,
-      text: "LeaderBoard",
+      text: `LEADERBOARD
+(click me! I dare you! I double dare you!)`,
       onPointerDown: () => {
         this.sound.stopAll();
         this.scene.start("LeaderBoard");
@@ -71,7 +72,7 @@ export class GameOver extends Scene {
       x: 960,
       y: 780,
       fontSize: 60,
-      text: "No! Who Made This Shit!?",
+      text: "No! Who made this crap!?",
       onPointerDown: () => {
         this.sound.stopAll();
         this.scene.start("Credits");

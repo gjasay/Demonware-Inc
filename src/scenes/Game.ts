@@ -11,7 +11,7 @@ const timeFormatter = new Intl.NumberFormat("en-US", {
   minimumIntegerDigits: 2,
 });
 
-const MUSIC = ["delicate", "middayslump", "thisjobsucks"];
+const MUSIC = ["delicate", "thisjobsucks", "middayslump"];
 const DIFFICULTY = ["Part-Time", "Full-Time", "OVERTIME"];
 const AVAILABLE_GAMES = [
   "Breakout",
@@ -116,7 +116,7 @@ export class Game extends Scene {
       .setOrigin(0);
 
     this.difficultyText = this.add
-      .text(0, 0, `Difficulty: ${DIFFICULTY[this.difficulty - 1]}`, {
+      .text(620, 980, `Status: ${DIFFICULTY[this.difficulty - 1]}`, {
         fontSize: 60,
         color: "#ff0000",
         stroke: "#000000",
@@ -176,7 +176,7 @@ export class Game extends Scene {
     });
     if (this.games.length === 0) {
       if (this.difficulty < 3) this.difficulty++;
-      this.difficultyText.setText(`Difficulty: ${DIFFICULTY[this.difficulty - 1]}`);
+      this.difficultyText.setText(`Status: ${DIFFICULTY[this.difficulty - 1]}`);
       this.playMusic();
       console.log("Difficulty:", this.difficulty);
       this.games.push(...AVAILABLE_GAMES);
