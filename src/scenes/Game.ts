@@ -11,7 +11,8 @@ const timeFormatter = new Intl.NumberFormat("en-US", {
   minimumIntegerDigits: 2,
 });
 
-const MUSIC = ["thisjobsucks", "middayslump", "delicate"];
+const MUSIC = ["delicate", "middayslump", "thisjobsucks"];
+const DIFFICULTY = ["Part-Time", "Full-Time", "OVERTIME"];
 const AVAILABLE_GAMES = [
   "Breakout",
   // "DrawPentagram",
@@ -38,6 +39,7 @@ export class Game extends Scene {
   score: number = 0;
   scoreText: Phaser.GameObjects.Text;
   difficulty: number = 1;
+  difficultyText: Phaser.GameObjects.Text;
 
   constructor() {
     super({ key: "Game", physics: { arcade: { gravity: { x: 0, y: 0 } } } });
@@ -51,6 +53,7 @@ export class Game extends Scene {
   start() {
     this.difficulty = 1;
     console.log("Difficulty:", this.difficulty);
+    this.playMusic();
     this.add.image(0, 0, "desk").setOrigin(0);
     this.folder = this.add
       .sprite(1920, 780, "folders")
@@ -112,6 +115,15 @@ export class Game extends Scene {
       .setRotation(-0.42)
       .setOrigin(0);
 
+    this.difficultyText = this.add
+      .text(0, 0, `Difficulty: ${DIFFICULTY[this.difficulty - 1]}`, {
+        fontSize: 60,
+        color: "#ff0000",
+        stroke: "#000000",
+        strokeThickness: 4,
+      })
+      .setOrigin(0)
+
     this.livesView = new Lives(this);
 
     this.paper = new Paper({
@@ -119,7 +131,6 @@ export class Game extends Scene {
       x: 930,
       y: 550,
       onComplete: () => {
-        this.playMusic();
         this.startGame();
       },
     }).setOrigin(0.5);
@@ -164,7 +175,9 @@ export class Game extends Scene {
       startTimer: this.startTimer,
     });
     if (this.games.length === 0) {
-      this.difficulty++;
+      if (this.difficulty < 3) this.difficulty++;
+      this.difficultyText.setText(`Difficulty: ${DIFFICULTY[this.difficulty - 1]}`);
+      this.playMusic();
       console.log("Difficulty:", this.difficulty);
       this.games.push(...AVAILABLE_GAMES);
     }
@@ -176,7 +189,6 @@ export class Game extends Scene {
     if (this.lives > 1) {
       this.lives--;
       this.livesView.setLives(this.lives);
-      this.playMusic();
       this.startGame();
     } else {
       this.lives = 3;
@@ -215,7 +227,7 @@ export class Game extends Scene {
 
   playMusic() {
     MUSIC.forEach((key) => this.sound.stopByKey(key));
-    this.sound.play(MUSIC[this.lives - 1], { volume: 0.2, loop: true });
+    this.sound.play(MUSIC[this.difficulty - 1], { volume: 0.2, loop: true });
   }
 
   onShutdown() {

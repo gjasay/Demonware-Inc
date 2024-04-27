@@ -29,11 +29,11 @@ export class Slingshot extends PaperBaseScene {
     this.projectileCount = 15;
 
     switch (this.difficulty) {
-      case 1:
+      case 2:
         this.maxVelocity = -800;
         this.milisecondsToSubtractVelocity = .75;
         break;
-      case 2:
+      case 3:
         this.maxVelocity = -1000;
         this.milisecondsToSubtractVelocity = .5;
         break;

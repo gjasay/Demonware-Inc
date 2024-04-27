@@ -18,10 +18,10 @@ export default class Breakout extends PaperBaseScene {
     super.startTimer();
 
     switch (this.difficulty) {
-      case 1:
+      case 2:
         this.velocityMultiplier = 1.5;
         break;
-      case 2:
+      case 3:
         this.velocityMultiplier = 1.75;
         break;
       default:

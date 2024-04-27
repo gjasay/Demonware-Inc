@@ -19,10 +19,10 @@ export default class Flap extends PaperBaseScene {
     super.startTimer(15, true);
     
     switch (this.difficulty) {
-      case 1:
+      case 2:
         this.speed = -200;
         break;
-      case 2:
+      case 3:
         this.speed = -350;
         break;
       default:
