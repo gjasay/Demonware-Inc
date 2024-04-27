@@ -5,7 +5,7 @@ export default class Pipe extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
 
     this.flipY = flipped;
-    if (!flipped) this.y += 600;
+    if (!flipped) this.y += 625;
   }
 
   update() {

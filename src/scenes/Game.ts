@@ -15,7 +15,6 @@ const MUSIC = ["delicate", "thisjobsucks", "middayslump"];
 const DIFFICULTY = ["Part-Time", "Full-Time", "OVERTIME"];
 const AVAILABLE_GAMES = [
   "Breakout",
-  // "DrawPentagram",
   "Flap",
   "Invaders",
   "Runner",
@@ -163,6 +162,13 @@ export class Game extends Scene {
   };
 
   startGame = () => {
+    if (this.games.length === 0) {
+      if (this.difficulty < 3) this.difficulty++;
+      this.difficultyText.setText(`Status: ${DIFFICULTY[this.difficulty - 1]}`);
+      this.playMusic();
+      console.log("Difficulty:", this.difficulty);
+      this.games.push(...AVAILABLE_GAMES);
+    }
     this.paper.setActive(false).setFrame(0);
     const randomIndex = Math.floor(Math.random() * this.games.length);
     this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
@@ -174,16 +180,11 @@ export class Game extends Scene {
       onGameOver: this.onGameOver,
       startTimer: this.startTimer,
     });
-    if (this.games.length === 0) {
-      if (this.difficulty < 3) this.difficulty++;
-      this.difficultyText.setText(`Status: ${DIFFICULTY[this.difficulty - 1]}`);
-      this.playMusic();
-      console.log("Difficulty:", this.difficulty);
-      this.games.push(...AVAILABLE_GAMES);
-    }
+
   };
 
   onGameOver = () => {
+
     if (this.paperSceneName) this.scene.stop(this.paperSceneName);
     this.sound.play(`loselife${4 - this.lives}`);
     if (this.lives > 1) {
