@@ -13,6 +13,7 @@ export class Runner extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
+    this.difficulty = 3;
     switch (this.difficulty) {
       case 2:
         this.spawnSpeed = 500;
@@ -36,6 +37,7 @@ export class Runner extends PaperBaseScene {
       .play("cat-walk")
       .setOrigin(0, 0)
       .setGravityY(1000)
+      .setScale(0.80)
       .setCircle(64)
       .setCollideWorldBounds(true);
 
@@ -65,11 +67,11 @@ export class Runner extends PaperBaseScene {
   };
 
   update() {
-    if (this.keys.space.isDown && this.cat.y > 610) {
+    if (this.keys.space.isDown && this.cat.y > 625) {
       this.sound.play(`flap${Math.floor(Math.random() * 3) + 1}`, {
         volume: 0.2,
       });
-      this.cat.setVelocityY(-500);
+      this.cat.setVelocityY(-350);
     }
     if (this.cat.y < 610) {
       this.cat.setFrame(2);
