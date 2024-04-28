@@ -46,6 +46,7 @@ export class Game extends Scene {
 
   create() {
     this.start();
+    this.input.setDefaultCursor('url(/assets/pentagram-cur.png), pointer');
     this.events.once("shutdown", this.onShutdown, this);
   }
 

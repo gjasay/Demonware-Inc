@@ -8,6 +8,7 @@ export class GameOver extends Scene {
   }
 
   create(data: { score: number }) {
+    this.input.setDefaultCursor("url(/assets/pentagram-cur.png), pointer");
     this.add.image(0, 0, "title-bg").setOrigin(0);
     this.add.image(960, 500, "gameover").setScale(0.7);
     this.sound.play("loselife3");

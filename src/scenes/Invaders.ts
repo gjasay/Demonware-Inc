@@ -16,13 +16,13 @@ export default class Invaders extends PaperBaseScene {
 
     switch (this.difficulty) {
       case 2:
-        this.enemyVelocity = 90;
+        this.enemyVelocity = 100;
         break;
       case 3:
-        this.enemyVelocity = 110;
+        this.enemyVelocity = 175;
         break;
       default:
-        this.enemyVelocity = 70;
+        this.enemyVelocity = 80;
         break;
     }
 
@@ -64,7 +64,7 @@ export default class Invaders extends PaperBaseScene {
       .setScale(0.5)
       .setOrigin(0.5)
       .setRotation(Math.PI)
-      .setCollideWorldBounds(true);
+      .setCollideWorldBounds(false);
 
     if (this.input.keyboard) {
       this.keys = this.input.keyboard.createCursorKeys();
@@ -86,14 +86,22 @@ export default class Invaders extends PaperBaseScene {
   }
 
   update() {
-    if (this.leftArrow.isDown || this.keyA.isDown) {
+    //@ts-expect-error - not now TypeScript!!
+    if (this.leftArrow.isDown && this.player.body?.velocity.x > -350 || this.keyA.isDown && this.player.body?.velocity.x > -350) {
+      //@ts-expect-error - not now TypeScript!!
+      if (this.player.body?.velocity.x > 0) this.player.setVelocityX(0);
       this.player.setAccelerationX(-250);
-    } else if (this.leftArrow.isDown || this.keyD.isDown) {
+    //@ts-expect-error - not now TypeScript!!
+    } else if (this.leftArrow.isDown && this.player.body?.velocity.x < 350 || this.keyD.isDown && this.player.body?.velocity.x < 350) {
+      //@ts-expect-error - not now TypeScript!!
+      if (this.player.body?.velocity.x < -0) this.player.setVelocityX(-0);
       this.player.setAccelerationX(250);
     } else {
       this.player.setAccelerationX(0);
     }
 
+    if (this.player.x < 0) this.player.x = 650;
+    if (this.player.x > 650) this.player.x = 0;
     if (this.enemyGroup.countActive() === 0) {
       super.onWin();
     }
@@ -102,7 +110,7 @@ export default class Invaders extends PaperBaseScene {
       if (bullet.body && bullet.body.position.y < 0) bullet.destroy();
     });
     this.enemyGroup.getChildren().forEach((enemy) => {
-      if (enemy.body && enemy.body.position.y > 740) super.onGameOver();
+      if (enemy.body && enemy.body.position.y > 740) enemy.body.position.y = 0;
     });
   }
 }
