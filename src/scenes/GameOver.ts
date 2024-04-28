@@ -61,7 +61,7 @@ export class GameOver extends Scene {
       x: 960,
       y: 700,
       fontSize: 60,
-      text: "Hell Yeah! Play Again!",
+      text: "Heck Yeah! Play Again!",
       onPointerDown: () => {
         this.sound.stopAll();
         this.scene.start("MainMenu");
