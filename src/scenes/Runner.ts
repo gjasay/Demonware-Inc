@@ -13,7 +13,6 @@ export class Runner extends PaperBaseScene {
 
   create(data: any) {
     super.create(data);
-    this.difficulty = 3;
     switch (this.difficulty) {
       case 2:
         this.spawnSpeed = 500;

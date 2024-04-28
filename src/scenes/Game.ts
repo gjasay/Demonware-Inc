@@ -172,7 +172,7 @@ export class Game extends Scene {
     }
     this.paper.setActive(false).setFrame(0);
     const randomIndex = Math.floor(Math.random() * this.games.length);
-    this.paperSceneName = this.games[3]; // Change this index to test specific games
+    this.paperSceneName = this.games[randomIndex]; // Change this index to test specific games
     this.games.splice(randomIndex, 1);
     console.log("Launch:", this.paperSceneName);
     this.scene.launch(this.paperSceneName, {
