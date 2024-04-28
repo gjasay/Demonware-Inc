@@ -36,7 +36,7 @@ export class Runner extends PaperBaseScene {
       .play("cat-walk")
       .setOrigin(0, 0)
       .setGravityY(1000)
-      .setScale(0.80)
+      .setScale(0.65)
       .setCircle(64)
       .setCollideWorldBounds(true);
 
